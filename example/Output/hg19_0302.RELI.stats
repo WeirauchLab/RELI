@@ -1,0 +1,2 @@
+Formal Phenotype	Ancestry	Source	Cell	Formal Cell	Label	Intersect	Total	Ratio	Mean	Std	Z-score	Relative Risk	P-val	Corrected P-val	Null_Model	Species
+Systemic_Lupus_Erythematosus	EU	Misc_ChIP	Mutu	MutuIII	EBNA2	26	53	0.490566	4.24288	1.89288	11.4942	6.12792	7.0531e-31	1.089e-27	../data/Null/CommonSNP_MAFmatch	EBV
