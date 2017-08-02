@@ -23,7 +23,6 @@
 #include <cstring>
 #include <queue> 
 #include <random> 
-// gsl lib
 #include <gsl/gsl_cdf.h>
 #include <gsl/gsl_randist.h>
 
@@ -41,7 +40,6 @@ namespace RELI{
 	#define BedSigBedFileDir ""
 	#define BedSigFastaDir ""
 
-	//
 	extern vector<string> linehandler(string);
 	//classes 
 	class phastConData{
@@ -60,7 +58,7 @@ namespace RELI{
 			return  (this->chr == rhs.chr && this->st == rhs.st && this->end == rhs.end);
 		}
 	};
-	class bed3col{   // bed 3 column format
+	class bed3col{  
 	public:
 		string bed_chr;
 		unsigned int bed_start;
@@ -83,10 +81,9 @@ namespace RELI{
 		vector<bed3col> myData;
 		vector<bed3col> myData_bgnull;
 		map<string, int> index;
-		map<pair<string, unsigned int>, int> index2;	//chr	location	st_value// should be " map<string, pair<unsigned int, int>> ", with 0 peak start as the first indexed location, same as those ones in index
+		map<pair<string, unsigned int>, int> index2;	
 		void makeIndex();
 		void makeIndex2();
-		// give full file name
 		void readingData(string, bool);
 		unsigned int median_data_length;
 		vector<double> phastCon_score_vec_from_peaks;
@@ -94,15 +91,15 @@ namespace RELI{
 		double sd_phastCons_score;
 		void cal_avg_phastCons_score();
 	};
-	class SNP{   // input SNPs
+	class SNP{  
 	public:
 		unsigned int inherited_unique_key_from_LD;
 		string snp_chr;
 		unsigned int snp_start;
 		unsigned int snp_end;
-		unsigned int length;		// SNP.end - SNP.start
-		string snp_name;			//rsid
-		string snp_type;    // single  insertion   deletion
+		unsigned int length;		
+		string snp_name;			
+		string snp_type;    
 		string obs_strand;
 		string _ref_allele;
 		vector<string> _alt_allele;
@@ -134,12 +131,12 @@ namespace RELI{
 			return (this->snp_name == rhs);
 		}
 	};
-	class LD_template{   // ld specified provided by user
+	class LD_template{  
 	public:
 		vector<string> mySNP;
 		string keySNP;
 	};
-	class LD{   // actual ld data after snp with ld collapse
+	class LD{   
 	public:
 		vector<SNP> mySNP;
 		SNP keySNP;
@@ -153,15 +150,13 @@ namespace RELI{
 		LD() :max_dis(0), min_dis(0){};
 		target_bed_file features_within_LDblock;
 		void get_features_within_LDblock(const target_bed_file& rhs);
-		//vector<unsigned int> SNPlengthvec; // SNP.end - SNP.start  // useless since snp length is defined in snp class
 		vector<bed3col> goShifting_feature_data();
 	};
-	class LD_sim :public LD{    // simulated ld, used for analysis
+	class LD_sim :public LD{   
 	public:
 		bool overlap_sim;
 		unsigned int unique_key;
 	};
-	// for replicating shomo's method
 	class LD_shomo_method :public LD{
 	public:
 		unsigned int extended_LD_start;
@@ -217,14 +212,10 @@ namespace RELI{
 	};
 	class MAF_TSS_binned_null_model{
 	public:
-		// MAF bin 0 - 9
-		// TSS bin 0 - 10
 		map<pair<int, int>, vector<unsigned int>> bin_map;
 	};
-	class resultClass{		// for post-processing
+	class resultClass{	
 	public:
-		//	Track	Cell	TF	Overlap	Total	Ratio	mean	
-		//	sd	zscore	enrichment	p-val	corrected p-val	Null_Model	species
 		string resultLine;
 		string track;
 		string cell;
@@ -346,7 +337,7 @@ namespace RELI{
 			this->ATGCmap['N'] = 'N';
 			this->public_ver_phenotype_name = ".";
 			this->public_ver_ancestry_name = ".";
-			this->public_ver_debug = false;	// change to false after testing
+			this->public_ver_debug = false;	
 			this->flag_input_snp=false;
 			this->flag_ld_file = false;
 			this->flag_dbsnp_table = false;
@@ -358,15 +349,14 @@ namespace RELI{
 			this->flag_output_dir = false;
 		}
 	};
-
 	//variables  
-	enum stats_model{ normal, empirical, phasetype, binomial, hypergeometric, fishers_exact }; // beta_binomial for later 
+	enum stats_model{ normal, empirical, phasetype, binomial, hypergeometric, fishers_exact }; 
 	// external variables 
-	extern vector<SNP> SNP_vec; 	// input SNP vector 
-	extern vector<SNP> SNP_vec_temp;   // temporary snp vec, used later for loading snp to ld and creating snp 2 ldsim mapping
-	extern vector<LD> LD_vec;	// original SNPs' LD 
-	extern vector<LD_template> LD_template_vec; 	// LD template (string only)  
-	extern vector<LD_sim> LD_sim_vec, ldsimvec_after_intersection; 	//	for simulation
+	extern vector<SNP> SNP_vec; 	
+	extern vector<SNP> SNP_vec_temp;   
+	extern vector<LD> LD_vec;	
+	extern vector<LD_template> LD_template_vec; 	
+	extern vector<LD_sim> LD_sim_vec, ldsimvec_after_intersection; 	
 	extern vector<bed3col> targetbedinfilevec;
 	extern vector<double> statsvec;
 	extern vector<pair<string, unsigned int>> chromosome_strucuture;
@@ -402,7 +392,6 @@ namespace RELI{
 	extern double corr_muliplier;
 	extern double sig_pct;
 	extern map<string, unsigned int> dnase_coverage_map;
-	//extern map<pair<string,unsigned int>, int> targetbedfileindex_start;
 	extern map<string, int> targetbedfileindex_start;
 	extern map<SNP, LD_sim, myless> snp2ldsim;
 	extern mymap speciesMap;
@@ -411,7 +400,6 @@ namespace RELI{
 	extern MAF_binned_null_model bg_null_model_data;
 	extern MAF_TSS_binned_null_model binned_null_model_data2;
 	extern unordered_map<string, vector<unsigned int>> indexing_mapping;
-	// function declarations
 	bool SNPfit(LD, SNP &, unsigned int, vector<pair<string, unsigned int>>, vector<unsigned int>);
 	bool SNPfit(LD, SNP &, unsigned int, vector<pair<string, unsigned int>>, vector<unsigned int>, bool);
 	bool SNPfit_local(LD &, SNP &, unsigned int, vector<pair<string, unsigned int>>, vector<unsigned int>, bool);
@@ -443,7 +431,7 @@ namespace RELI{
 	double binomial_pvalue_appr(int, int, double);
 	void loadSnpFile(string);
 }
-// end of BedSig namespace  
+// end of RELI namespace  
 
 
 
