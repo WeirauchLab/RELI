@@ -28,7 +28,7 @@ DATAURL=https://tf.cchmc.org/external/RELI/data.tar.bz2
 # Required (third-party) libraries
 LIBS=gsl gslcblas
 
-CXXFLAGS=-std=c++11 -O3 -w $(addprefix -l,$(LIBS)) -I$(SOURCEDIR)
+CXXFLAGS=-std=c++11 -O3 -ggdb -w -I$(SOURCEDIR)
 
 # ANSI terminal colors (see 'man tput') and
 # https://linuxtidbits.wordpress.com/2008/08/11/output-color-on-bash-scripts/
@@ -43,13 +43,15 @@ GREEN=$(shell tput setaf 2)
 RESET=$(shell tput sgr0 )
 endif
 
-.PHONY: binary
 binary: $(PKGNAME)
 
-$(PKGNAME): $(addprefix $(SOURCES),$(PKGNAME) $(INCLUDES))
-	g++ $(CXXFLAGS) -o $(PKGNAME) $(SOURCES)
+$(PKGNAME): $(addprefix $(SOURCEDIR)/,$(SOURCES) $(INCLUDES))
+	g++ $(CXXFLAGS) -o $(PKGNAME) $(addprefix $(SOURCEDIR)/,$(SOURCES)) \
+	    $(addprefix -l,$(LIBS)) 
 
-.PHONY: test
+clean:
+	-rm -f a.out a.exe *.o $(PKGNAME) $(PKGNAME).exe
+
 test: fetch-data
 	pushd example && example_run.sh
 	-popd
@@ -59,7 +61,6 @@ fetch-data: .data_validated
 	curl $(DATAURL) | tar xjf -
 	data/validate.sh && touch .data_validated
 
-.PHONY: help
 help:
 	@echo
 	@echo "  $(UL)$(BOLD)$(BLUE)Building $(PKGNAME) v$(PKGVER)$(RESET)"
@@ -77,8 +78,6 @@ help:
 	@echo "  For more help, see https://tf.cchmc.org/s/reli-readme"
 	@echo
 
-.PHONY install:
-.PHONY uninstall:
 uninstall:
 install:
 	@echo
