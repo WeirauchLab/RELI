@@ -1,4 +1,7 @@
-../src/RELI \
+#!/bin/bash
+# Example invocation of the Regulatory Locus Intersection (RELI) tool
+
+../RELI \
   -snp SLE_EU.snp  \
   -ld SLE_EU.ld \
   -index ../data/ChIPseq.index \
