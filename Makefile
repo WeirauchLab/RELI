@@ -50,16 +50,28 @@ $(PKGNAME): $(addprefix $(SOURCEDIR)/,$(SOURCES) $(INCLUDES))
 	    $(addprefix -l,$(LIBS)) 
 
 clean:
-	-rm -f a.out a.exe *.o $(PKGNAME) $(PKGNAME).exe
+	-rm -f a.out a.exe *.o $(PKGNAME) $(PKGNAME).exe core.*
 
-test: fetch-data
-	pushd example && example_run.sh
+test: binary validate-data
+	pushd example && ./example_run.sh
 	-popd
 
-fetch-data: .data_validated
-	-rm -f .data_validated
-	curl $(DATAURL) | tar xjf -
-	data/validate.sh && touch .data_validated
+validate-data: fetch-data
+	if [ ! -f .data_validated ]; then \
+		if data/validate.sh; then \
+			touch .data_validated; \
+		else \
+			echo >&2;                                                             \
+			echo "$(UL)$(RED)ACK!$(RESET)" >&2;                                   \
+			echo >&2;                                                             \
+			echo "Data validation failed. Try deleting the 'data' directory" >&2; \
+			echo "and running 'make test' again." >&2;                            \
+			echo >&2; \
+		fi; \
+	fi
+
+fetch-data:
+	test -x data/validate.sh || curl $(DATAURL) | tar xjf -
 
 help:
 	@echo

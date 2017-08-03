@@ -4,6 +4,7 @@ data/**
 SHA1SUMS
 .data_validated
 *.core
+core.*
 
 # don't commit the binary
 RELI
