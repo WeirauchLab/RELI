@@ -34,29 +34,24 @@ running `example_run.sh` in a terminal like so:
 
 ## Command-line options
 
-_I recommend explaining whether options are required or optional here, like
-the example I used for `-match` (not sure if that's really optional or not
-but it's just an example)._
+_Required options are in **bold text**_
 
-_It's possible to add another column to the table if you want; the complete
-reference for "GitHub-flavored Markdown" is [here][md]._
-
-| Option                       | Explanation                                 |
-|------------------------------|---------------------------------------------|
-| `-snp <snp_file.snp>`        | description of this option                  |
-| `-ld <ld_file.ld>`           |                                             |
-| `-index path/to/index`       |                                             |
-| `-data path/to/datafile`     |                                             |
-| `-target path/to/target`     |                                             |
-| `-build path/to/hg19.txt`    |                                             |
-| `-null path/to/null/model`   |                                             |
-| `-dbsnp path/to/snptable`    |                                             |
-| `-out path/output/dir`       |                                             |
-| `-match`                     | _(optional)_ description of this option     |
-| `-rep <num>`                 |                                             |
-| `-corr <num>`                |                                             |
-| `-phenotype path/to/pheno`   |                                             |
-| `-ancestry path/to/ancestry` |                                             |
+| Option                | Explanation
+|-----------------------|------------------------------------------
+| **`-snp FILE`**       | Phenotype snp file in 4 column bed format
+| `-ld FILE`            | (optional) Phenotype linkage disequilibrium structure for snps, default: no ld file
+| **`-index FILE`**     | ChIP-seq index file
+| **`-data DIR`**       | Specify directory where ChIP-seq data are stored
+| **`-target STRING`**  | Target label of ChIP-seq experiment to be tested from index file
+| **`-build FILE`**     | Genome build file
+| **`-null FILE`**      | Null model file
+| **`-dbsnp FILE`**     | dbSNP table file
+| **`-out DIR`**        | Specify output directory name under currentg working folder.
+| `-match`              | (optional) Boolean switch to turn on minor allele frequency based matching, default: off
+| `-rep NUMBER`         | (optional) Number of permutation/simulation to be performed, default: 2000
+| `-corr NUMBER`        | (optional) Bonferroni correction multiplier for multiple test, default: 1
+| `-phenotype STRING`   | (optional) User-provided phenotype name, default: "."
+| `-ancestry STRING`    | (optional) User provided ancestry name, default: "."
 
 ## How to cite
 
