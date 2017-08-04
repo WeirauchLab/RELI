@@ -12,8 +12,13 @@
 ##                                                                    ##
 ########################################################################
 PKGNAME=RELI
-# FIXME: this needs to be updated with a pre-commit hook
+# FIXME: this needs to be updated with a pre-commit hook, or we need to pass
+# the value of this variable as a preprocessor flag (-D) to g++
 PKGVER=0.90
+
+# Enable debug switches by running 'make DEBUG=1' or 'make debug'
+# (what this changes: don't add -O [optimize], add -ggdb)
+DEBUG=0
 
 # FIXME: Install data on user's system, possibly in /opt/$(PKGNAME)/share
 DESTROOT=/usr/local
@@ -28,7 +33,14 @@ DATAURL=https://tf.cchmc.org/external/RELI/data.tar.bz2
 # Required (third-party) libraries
 LIBS=gsl gslcblas
 
-CXXFLAGS=-std=c++11 -O3 -ggdb -w -I$(SOURCEDIR)
+CXXFLAGS=-std=c++11 -I$(SOURCEDIR)
+ifeq ($(DEBUG), 1)
+# enable debugging with gdb
+CXXFLAGS += -ggdb -Wall -Wno-sign-compare -Wno-parentheses
+else
+# optimize and disable warnings
+CXXFLAGS += -O3 -w
+endif
 
 # ANSI terminal colors (see 'man tput') and
 # https://linuxtidbits.wordpress.com/2008/08/11/output-color-on-bash-scripts/
@@ -50,7 +62,7 @@ $(PKGNAME): $(addprefix $(SOURCEDIR)/,$(SOURCES) $(INCLUDES))
 	    $(addprefix -l,$(LIBS)) 
 
 clean:
-	-rm -f a.out a.exe *.o $(PKGNAME) $(PKGNAME).exe core.*
+	-rm -f a.out a.exe *.o $(PKGNAME) $(PKGNAME).exe core.* vgcore.*
 
 test: binary validate-data
 	pushd example && ./example_run.sh
@@ -73,19 +85,28 @@ validate-data: fetch-data
 fetch-data:
 	test -x data/validate.sh || curl $(DATAURL) | tar xjf -
 
+# Preserve the complete path of this Makefile in case we were called with
+# something like 'make -f Makefile.WL'. According to §5.6.3 of the manual, the
+# '-f' option is not propagated, so this trickery is necessary.
+ME=$(word $(words $(MAKEFILE_LIST)),$(MAKEFILE_LIST))
+
+debug:
+	make -f $(ME) DEBUG=1
+
 help:
 	@echo
 	@echo "  $(UL)$(BOLD)$(BLUE)Building $(PKGNAME) v$(PKGVER)$(RESET)"
 	@echo
 	@echo "  Try one of these:"
 	@echo
-	@echo "      $(BOLD)make binary$(RESET) - to build the RELI binary"
-	@echo "                                   (this is the default target)"
+	@echo "      $(BOLD)make binary$(RESET) - (default target) build the RELI binary"
 	@echo
-	@echo "      $(BOLD)make test$(RESET)   - to download sample data and"
-	@echo "                                   perform a test analysis"
+	@echo "      $(BOLD)make test$(RESET)   - download sample data and perform a test analysis"
+	@echo
+	@echo "      $(BOLD)make debug$(RESET)  - build a debuggable version of the RELI binary"
 	@echo
 	@echo "      $(BOLD)make help$(RESET)   - you're looking at it"
+	@echo
 	@echo
 	@echo "  For more help, see https://tf.cchmc.org/s/reli-readme"
 	@echo
