@@ -33,7 +33,7 @@ DATAURL=https://tf.cchmc.org/external/RELI/data.tar.bz2
 # Required (third-party) libraries
 LIBS=gsl gslcblas
 
-CXXFLAGS=-std=c++11 -I$(SOURCEDIR)
+CXXFLAGS=$(CFLAGS) $(LDFLAGS) -std=c++11 -I$(SOURCEDIR)
 ifeq ($(DEBUG), 1)
 # enable debugging with gdb
 CXXFLAGS += -ggdb -Wall -Wno-sign-compare -Wno-parentheses
