@@ -6,9 +6,9 @@ potentially bind a significant number of (risk) loci for a given disease.
 To assess the significance of such disease loci and TF interaction, repeated 
 permutation/simulation procedure is used in RELI with disease-specific genomic 
 coordinates of plausibly causal genetic variants. A null distribution of such 
-interactions is then estimated from these procedures and is used to rank TF.
+interactions is then estimated from these procedures and is used to rank candidate TFs.
 
-Minor allele frequency (MAF) matching along with superimposed 
+Ancestry specific, minor allele frequency (MAF) matching, and along with superimposed 
 linkage disequilibrium (LD) block structure are used in RELI analysis to improve the quality of its findings. 
 
 
