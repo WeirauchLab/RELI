@@ -1,6 +1,16 @@
 ## Regulatory Element Locus Intersection (RELI) Analysis
 
-A one-paragraph description of what the tool does.
+RELI analysis is used to identify transcription factors (TFs) that 
+potentially bind a significant number of (risk) loci for a given disease. 
+
+To assess the significance of such disease loci and TF interaction, repeated 
+permutation/simulation procedure is used in RELI with disease-specific genomic 
+coordinates of plausibly causal genetic variants. A null distribution of such 
+interactions is then estimated from these procedures and is used to rank TF.
+
+Minor allele frequency (MAF) matching along with superimposed 
+linkage disequilibrium (LD) block structure are used in RELI analysis to improve the quality of its findings. 
+
 
 ## Installation
 
