@@ -1210,7 +1210,8 @@ void RELI::RELIobj::load_ld_snps(bool rhs1, string rhs2){
 void RELI::RELIobj::output(){
 	ofstream out;
 	RELI::cal_stats(RELI::used_stats_model); 
-	RELI::cmdline = "mkdir  " + this->public_ver_output_dir;
+    // 'mkdir -p' avoids "file already exists" error
+	RELI::cmdline = "mkdir -p " + this->public_ver_output_dir;
 	system(RELI::cmdline.c_str()); 
 	out.open(this->public_ver_output_fname.c_str());
 	out << "Formal Phenotype" << "\t" << "Ancestry" << "\t" << "Source"
