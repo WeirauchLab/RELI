@@ -117,6 +117,7 @@ namespace RELI{
 			if (0.35 <= inVal &&inVal < 0.4){ return 7; }
 			if (0.4 <= inVal &&inVal < 0.45){ return 8; }
 			if (0.45 <= inVal &&inVal <= 0.5){ return 9; }
+            return 0;
 		}
 		string _upstreamseq_50bp;
 		string _downstreamseq_50bp;
