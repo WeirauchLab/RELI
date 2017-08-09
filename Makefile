@@ -55,6 +55,9 @@ GREEN=$(shell tput setaf 2)
 RESET=$(shell tput sgr0 )
 endif
 
+# To make Eclipse happy; this is the default target for Makefile projects
+all: binary
+
 binary: $(PKGNAME)
 
 $(PKGNAME): $(addprefix $(SOURCEDIR)/,$(SOURCES) $(INCLUDES))
