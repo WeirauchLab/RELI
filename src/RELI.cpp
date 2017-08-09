@@ -99,35 +99,35 @@ int main(int argc, char* argv[]){
 	/*
 		initilize RELI instance and handle options	
 	*/
-	RELI::RELIobj RELIinstance;	
+    RELI::RELIobj *RELIinstance = new RELI::RELIobj;	
 	for (auto i = 1; i < argc; ++i){
 		if (strcmp(argv[i], "-null") == 0){		// null model
-			RELIinstance.public_ver_null_fname = argv[i + 1];
-			RELIinstance.flag_null_file = true;
+			RELIinstance->public_ver_null_fname = argv[i + 1];
+			RELIinstance->flag_null_file = true;
 		}
 		if (strcmp(argv[i], "-dbsnp") == 0){		// dbSNP table that contains MAF allele frequency info
-			RELIinstance.public_ver_snp_table_fname = argv[i + 1];
-			RELIinstance.flag_dbsnp_table = true;
+			RELIinstance->public_ver_snp_table_fname = argv[i + 1];
+			RELIinstance->flag_dbsnp_table = true;
 		}
 		if (strcmp(argv[i], "-match") == 0){		// snp matching indicator
 			RELI::snp_matching = true;
 		}
 		if (strcmp(argv[i], "-snp") == 0){		// phenotype snp file
-			RELIinstance.public_ver_snp_fname = argv[i + 1];
-			RELIinstance.flag_input_snp = true;
+			RELIinstance->public_ver_snp_fname = argv[i + 1];
+			RELIinstance->flag_input_snp = true;
 		}
 		if (strcmp(argv[i], "-ld") == 0){		// phenotype ld file
 			RELI::ldfile = argv[i + 1];
 			RELI::ldfile_flag = true;
-			RELIinstance.flag_ld_file = true;
+			RELIinstance->flag_ld_file = true;
 		}		
 		if (strcmp(argv[i], "-data") == 0){		// directory of target ChIP-seq files
-			RELIinstance.public_ver_data_dir= argv[i + 1];
-			RELIinstance.flag_chipseq_data_dir = true;
+			RELIinstance->public_ver_data_dir= argv[i + 1];
+			RELIinstance->flag_chipseq_data_dir = true;
 		}
 		if (strcmp(argv[i], "-out") == 0){		// output directory
-			RELIinstance.public_ver_output_dir = argv[i + 1];
-			RELIinstance.flag_output_dir = true;
+			RELIinstance->public_ver_output_dir = argv[i + 1];
+			RELIinstance->flag_output_dir = true;
 		}
 		if (strcmp(argv[i], "-rep") == 0){		// replication number
 			RELI::repmax = atoi(argv[i + 1]);
@@ -136,57 +136,57 @@ int main(int argc, char* argv[]){
 			RELI::corr_muliplier = atof(argv[i + 1]);
 		}
 		if (strcmp(argv[i], "-target") == 0){		//	string corresponding to target ChIP-seq data
-			RELIinstance.public_ver_target_label = argv[i + 1];
-			RELIinstance.flag_target_label = true;
+			RELIinstance->public_ver_target_label = argv[i + 1];
+			RELIinstance->flag_target_label = true;
 		} 
 		if (strcmp(argv[i], "-index") == 0){		// ChIP-seq index file
-			RELIinstance.public_ver_data_index_fname = argv[i + 1];
-			RELIinstance.flag_chipseq_data_index = true;
+			RELIinstance->public_ver_data_index_fname = argv[i + 1];
+			RELIinstance->flag_chipseq_data_index = true;
 		} 
 		if (strcmp(argv[i], "-build") == 0){		// genome build file
 			RELI::species_chr_mapping_file = argv[i + 1];
 			RELI::using_default_species = false;
-			RELIinstance.flag_genome_build = true;
+			RELIinstance->flag_genome_build = true;
 		}
 		if (strcmp(argv[i], "-phenotype") == 0){		// phenotype name
-			RELIinstance.public_ver_phenotype_name = argv[i + 1];			
+			RELIinstance->public_ver_phenotype_name = argv[i + 1];			
 		}
 		if (strcmp(argv[i], "-ancestry") == 0){		// phenotype ancestry
-			RELIinstance.public_ver_ancestry_name= argv[i + 1];
+			RELIinstance->public_ver_ancestry_name= argv[i + 1];
 		}
 	}
 	display_RELI();
-	if (argc < 2 || !RELIinstance.minimum_check()) {	// check minimum arguements for run
+	if (argc < 2 || !RELIinstance->minimum_check()) {	// check minimum arguements for run
 		display_help(); 
 	}
-	
+
 	/* 
 		load data and pre-processing 	
 	*/
 	RELI::createSpeciesMap(RELI::using_default_species); //	load genome structure
-	RELIinstance.public_ver_read_data_index();	//	read ChIP-seq index file
-	RELIinstance.public_ver_set_target_data();	//	set target ChIP-seq file
+	RELIinstance->public_ver_read_data_index();	//	read ChIP-seq index file
+	RELIinstance->public_ver_set_target_data();	//	set target ChIP-seq file
 	RELI::target_bed_file TBF;	// initialize target ChIP-seeq file object
-	TBF.readingData(RELIinstance.public_ver_target_data_fname, false);	// load target ChIP-seeq file
+	TBF.readingData(RELIinstance->public_ver_target_data_fname, false);	// load target ChIP-seeq file
 	TBF.makeIndex();	// create target ChIP-seeq file index
 	RELI::targetbedinfilevec = TBF.myData;	// 
 	RELI::targetbedfileindex_start = TBF.index;	// 
-	RELI::binned_null_model_data.loading_null_data(RELIinstance.public_ver_null_fname.c_str());  //	load null model
-	RELI::loadSnpFile(RELIinstance.public_ver_snp_fname.c_str()); //	load phenotype snp file
-	RELIinstance.load_snp_table();	//	load dbsnp table
-	RELIinstance.extract_snp_info(RELIinstance.ATGCmap);	//	extract snp bin info from dbsnp table
+	RELI::binned_null_model_data.loading_null_data(RELIinstance->public_ver_null_fname.c_str());  //	load null model
+	RELI::loadSnpFile(RELIinstance->public_ver_snp_fname.c_str()); //	load phenotype snp file
+	RELIinstance->load_snp_table();	//	load dbsnp table
+	RELIinstance->extract_snp_info(RELIinstance->ATGCmap);	//	extract snp bin info from dbsnp table
 	RELI::SNP_vec_temp = RELI::SNP_vec;   // copy over snp data for loading ld structure
-	RELIinstance.load_ld_snps(RELI::ldfile_flag,RELI::ldfile);	//	load phenotype ld structure file
+	RELIinstance->load_ld_snps(RELI::ldfile_flag,RELI::ldfile);	//	load phenotype ld structure file
  
 	/*
 		permutation/simulation
 	*/
-	RELIinstance.sim(); 
+	RELIinstance->sim(); 
 	
 	/*
 		handle statistics and output
 	*/
-	RELIinstance.output(); 
+	RELIinstance->output(); 
 
 
 	return 0;
