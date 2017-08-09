@@ -150,7 +150,7 @@ local.properties
 *.launch
 
 # CDT-specific (C/C++ Development Tooling)
-#.cproject
+.cproject
 
 # Code Recommenders
 .recommenders/

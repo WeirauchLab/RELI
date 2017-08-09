@@ -168,7 +168,7 @@ namespace RELI{
 	};
 	class myless{
 	public:
-		bool operator()(SNP snpA, SNP snpB){
+		bool operator()(SNP snpA, SNP snpB) const {
 			return ((snpA.snp_name<snpB.snp_name) || ((snpA.snp_name == snpB.snp_name) && (snpA.snp_chr<snpB.snp_chr))
 				|| ((snpA.snp_name == snpB.snp_name) && (snpA.snp_chr == snpB.snp_chr) && (snpA.snp_start < snpB.snp_start)));
 		}
