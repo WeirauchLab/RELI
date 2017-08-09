@@ -6,13 +6,15 @@ potentially bind a significant number of (risk) loci for a given disease.
 To assess the significance of such disease loci and TF interaction, repeated 
 permutation/simulation procedure is used in RELI with disease-specific genomic 
 coordinates of plausibly causal genetic variants. A null distribution of such 
-interactions is then estimated from these procedures and is used to rank candidate TFs.
+interactions is then estimated from these procedures and is used to rank
+candidate TFs.
 
-Ancestry specific, minor allele frequency (MAF) matching, and along with superimposed 
-linkage disequilibrium (LD) block structure are used in RELI analysis to improve the quality of its findings. 
+Ancestry specific, minor allele frequency (MAF) matching, and along with
+superimposed linkage disequilibrium (LD) block structure are used in RELI
+analysis to improve the quality of its findings. 
 
 
-## Installation
+## Installation on GNU/Linux
 
 RELI requires a C++11 compiler (_e.g._ GNU CC 4.7 or higher) and `libgsl` and
 `libgslcblas` from the [GNU Scientific Library][gsl].
@@ -21,13 +23,32 @@ A GNU-style `Makefile` is provided. You can build the RELI binary with just
 
     make
 
-In order to run a test analysis, **you need to download the example data**
+In order to run a test analysis, **you need to download the sample data**
 either manually (see the next section) or just type
 
     make test
 
 which will download and validate the sample datasets automatically, then run
 a the test analysis in `example/example_run.sh`.
+
+### Other platforms
+RELI has been verified to build and run on the following platforms:
+
+* Windows with [Cygwin][cyg] and GCC 5.4.0 (ensure the `gcc-g++`, `make`,
+  `gsl`, and `libgsl-devel`, and `curl` packages are installed, at a minimum)
+
+* Mac OS X 10.11.6 (El Capitan) with LLVM 8.0.0 (provided by the
+  [Xcode Command Line Tools][xct]) and GSL installed from [MacPorts][mp] 
+
+On Windows, make sure you run `make` (or the `example/example_run.sh` script)
+from within the Cygwin shell, _not_ the Windows Command Prompt or PowerShell.
+You may need to lightly modify the CDT build toolchain settings if your
+installation of Cygwin is not at `C:\Cygwin64`.
+
+[Eclipse CDT][cdt] project settings files are also included for both of the
+above toolchains. Just create a copy (or symlink) of the appropriate one
+called `.cproject`, then choose _File_ &rarr; _Import..._ &rarr; _Existing
+Projects into Workspace_ and browse to where you cloned the repository.
 
 ### Manually downloading sample data
 
@@ -81,7 +102,7 @@ where `label` corresponds to the filename, which you should deposit in the
 
 ### Adding a new genome build or species
 
-To use a different genome build, use the UCSC [`fetchChromSizes` utility][fcs]
+To use a different genome build, use the UCSC [`fetchChromSizes`][fcs] utility
 (usage information [here][fcsusage]) to download chromosome information for that
 build. You may wish to prune lines representing unmapped chromosome information
 (_e.g._, `chrN_glXXXXXX_random` and `chrUn_glXXXXXX`) from the downloaded data
@@ -115,3 +136,7 @@ Project avatar based on Wikimedia Commons [Chromosome_18.svg][wmc]
 [fcs]: http://hgdownload.soe.ucsc.edu/admin/exe/linux.x86_64/fetchChromSizes
 [fcsusage]: http://hgdownload.soe.ucsc.edu/admin/exe/linux.x86_64/fetchChromSizes
 [ghi]: https://github.com/WeirauchLab/RELI/issues
+[mp]: https://www.macports.org/
+[cdt]: https://www.eclipse.org/cdt/
+[cyg]: http://cygwin.org/
+[xct]: https://stackoverflow.com/a/32894314
