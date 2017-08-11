@@ -20,9 +20,6 @@ PKGVER=0.90
 # (what this changes: don't add -O [optimize], add -ggdb)
 DEBUG=0
 
-# FIXME: Install data on user's system, possibly in /opt/$(PKGNAME)/share
-DESTROOT=/usr/local
-
 # Prepends $(SOURCEDIR) to all the sources and builds a binary in the top
 # level of the repo
 SOURCEDIR=src
@@ -33,6 +30,7 @@ DATAURL=https://tf.cchmc.org/external/RELI/data.tar.bz2
 # Required (third-party) libraries
 LIBS=gsl gslcblas
 
+CC=g++
 CXXFLAGS=$(CFLAGS) $(LDFLAGS) -std=c++11 -I$(SOURCEDIR)
 ifeq ($(DEBUG), 1)
 # enable debugging with gdb
@@ -61,7 +59,7 @@ all: binary
 binary: $(PKGNAME)
 
 $(PKGNAME): $(addprefix $(SOURCEDIR)/,$(SOURCES) $(INCLUDES))
-	g++ $(CXXFLAGS) -o $(PKGNAME) $(addprefix $(SOURCEDIR)/,$(SOURCES)) \
+	$(CC) $(CXXFLAGS) -o $(PKGNAME) $(addprefix $(SOURCEDIR)/,$(SOURCES)) \
 	    $(addprefix -l,$(LIBS)) 
 
 clean:

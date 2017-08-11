@@ -13,25 +13,52 @@ Ancestry specific, minor allele frequency (MAF) matching, and along with
 superimposed linkage disequilibrium (LD) block structure are used in RELI
 analysis to improve the quality of its findings. 
 
-
 ## Installation on GNU/Linux
 
 RELI requires a C++11 compiler (_e.g._ GNU CC 4.7 or higher) and `libgsl` and
 `libgslcblas` from the [GNU Scientific Library][gsl].
 
-A GNU-style `Makefile` is provided. You can build the RELI binary with just
+You may download the latest release as a compressed archive from GitHub, or
+clone the repository with Git:
+
+    # GitHub
+    git clone https://github.com/WeirauchLab/RELI.git
+
+    # Weirauch Lab GitLab
+    git clone https://tfwebdev.research.cchmc.org/gitlab/ches2d/RELI_public.git
+
+A GNU-style `Makefile` is provided in the repository. With GSL installed
+system-wide, you can build the RELI binary with just
 
     make
+
+then run `./RELI` with no arguments to verify that you have a working binary
+(you should get a help screen).
+
 
 In order to run a test analysis, **you need to download the sample data**
 either manually (see the next section) or just type
 
     make test
 
-which will download and validate the sample datasets automatically, then run
-a the test analysis in `example/example_run.sh`.
+which will download and validate the sample datasets automatically, then invoke
+`example/example_run.sh` to invoke RELI on the sample data.
+
+
+### Toolchain or libraries in non-standard locations
+
+The included `Makefile` will respect `CFLAGS` and `LDFLAGS` if set in the
+environment, for example, if you have a locally-built GSL that is installed in
+a non-standard place (such as in your home directory):
+
+    CFLAGS=-I/path/to/include LDFLAGS=-L/path/to/lib make
+
+If `g++` is not available in your `PATH` (or it has a different name), you will
+likely want to modify the Makefile directly, beginning around line 33 with the
+`CC` variable.
 
 ### Other platforms
+
 RELI has been verified to build and run on the following platforms:
 
 * Windows with [Cygwin][cyg] and GCC 5.4.0 (ensure the `gcc-g++`, `make`,
@@ -118,7 +145,12 @@ organism.
 
 ## How to cite
 
-_fill this in whenever the publication details are available_
+_The corresponding journal article is still under review._
+
+## Feedback
+
+Please report any issues with RELI (or feature suggestions) in our
+[GitHub issue tracker][ghi].
 
 ## Authors
 
