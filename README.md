@@ -1,17 +1,20 @@
 ## Regulatory Element Locus Intersection (RELI) Analysis
 
-RELI analysis is used to identify transcription factors (TFs) that 
-potentially bind a significant number of (risk) loci for a given disease. 
+RELI (Regulatory Element Locus Intersection) is an algorithm for discovering transcription factors (TFs) that bind a significant number of loci associated with a given disease or phenotype (e.g., through a Genome Wide Association study, or GWAS).
 
-To assess the significance of such disease loci and TF interaction, repeated 
-permutation/simulation procedure is used in RELI with disease-specific genomic 
-coordinates of plausibly causal genetic variants. A null distribution of such 
-interactions is then estimated from these procedures and is used to rank
-candidate TFs.
+The major data components are
 
-Ancestry specific, minor allele frequency (MAF) matching, and along with
-superimposed linkage disequilibrium (LD) block structure are used in RELI
-analysis to improve the quality of its findings. 
+1. An input set of disease or phenotype-associated genetic variants (RS IDs)
+
+2. An internal “library” consisting of many ChIP-seq dataset peaks (in the form of .bed files)
+
+3. An internal file containing information on genetic variant allele frequencies, etc.
+
+To assess the significance of the intersection between the input disease variants and a given TF ChIP-seq dataset, RELI performs simulations, generating a null distribution used for P-value calculations.
+
+The output of RELI is a series of statistics based upon the significance of the overlap between the input genetic variants and the selected ChIP-seq dataset.
+
+Additional details on RELI and the associated findings can be found in its accompanying publication (manuscript currently in revision).
 
 ## Installation on GNU/Linux
 
