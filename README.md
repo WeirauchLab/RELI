@@ -159,7 +159,8 @@ Please report any issues with RELI (or feature suggestions) in our
 
 | Name              | Email              | Institution                    |
 |-------------------|--------------------|--------------------------------|
-| Dr. Xiaoting Chen | chenxt@mail.uc.edu | Cincinnati Children's Hospital
+| Dr. Xiaoting Chen | Xiaoting.Chen@cchmc.org | Cincinnati Children's Hospital
+| Dr. Matthew Weirauch | Matthew.Weirauch@cchmc.org | Cincinnati Children's Hospital
 
 ## Credits
 
