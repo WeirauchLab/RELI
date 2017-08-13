@@ -1,20 +1,29 @@
 ## Regulatory Element Locus Intersection (RELI) Analysis
 
-RELI (Regulatory Element Locus Intersection) is an algorithm for discovering transcription factors (TFs) that bind a significant number of loci associated with a given disease or phenotype (e.g., through a Genome Wide Association study, or GWAS).
+RELI (Regulatory Element Locus Intersection) is an algorithm for discovering
+transcription factors (TFs) that bind a significant number of loci associated
+with a given disease or phenotype (e.g., through a Genome Wide Association
+study, or GWAS).
 
 The major data components are
 
 1. An input set of disease or phenotype-associated genetic variants (RS IDs)
 
-2. An internal “library” consisting of many ChIP-seq dataset peaks (in the form of .bed files)
+2. An internal “library” consisting of many ChIP-seq dataset peaks (in the form
+   of .bed files)
 
-3. An internal file containing information on genetic variant allele frequencies, etc.
+3. An internal file containing information on genetic variant allele
+   frequencies, etc.
 
-To assess the significance of the intersection between the input disease variants and a given TF ChIP-seq dataset, RELI performs simulations, generating a null distribution used for P-value calculations.
+To assess the significance of the intersection between the input disease
+variants and a given TF ChIP-seq dataset, RELI performs simulations, generating
+a null distribution used for P-value calculations.
 
-The output of RELI is a series of statistics based upon the significance of the overlap between the input genetic variants and the selected ChIP-seq dataset.
+The output of RELI is a series of statistics based upon the significance of the
+overlap between the input genetic variants and the selected ChIP-seq dataset.
 
-Additional details on RELI and the associated findings can be found in its accompanying publication (manuscript currently in revision).
+Additional details on RELI and the associated findings can be found in its
+accompanying publication (manuscript currently in revision).
 
 ## Installation on GNU/Linux
 
@@ -62,7 +71,8 @@ likely want to modify the Makefile directly, beginning around line 33 with the
 
 ### Other platforms
 
-RELI has been verified to build and run on the following platforms:
+RELI has also been verified to build and run on the following platforms (in
+addition to GNU/Linux):
 
 * Windows with [Cygwin][cyg] and GCC 5.4.0 (ensure the `gcc-g++`, `make`,
   `gsl`, and `libgsl-devel`, and `curl` packages are installed, at a minimum)
@@ -157,9 +167,9 @@ Please report any issues with RELI (or feature suggestions) in our
 
 ## Authors
 
-| Name              | Email              | Institution                    |
-|-------------------|--------------------|--------------------------------|
-| Dr. Xiaoting Chen | Xiaoting.Chen@cchmc.org | Cincinnati Children's Hospital
+| Name                 | Email                      | Institution
+|----------------------|----------------------------|--------------------------------
+| Dr. Xiaoting Chen    | Xiaoting.Chen@cchmc.org    | Cincinnati Children's Hospital
 | Dr. Matthew Weirauch | Matthew.Weirauch@cchmc.org | Cincinnati Children's Hospital
 
 ## Credits
