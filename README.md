@@ -56,6 +56,8 @@ either manually (see the next section) or just type
 which will download and validate the sample datasets automatically, then invoke
 `example/example_run.sh` to invoke RELI on the sample data.
 
+**This test analysis requires around 10 GB of RAM** to finish successfully; 16 GB
+is recommended.
 
 ### Toolchain or libraries in non-standard locations
 
