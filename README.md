@@ -167,12 +167,14 @@ _The corresponding journal article is still under review._
 Please report any issues with RELI (or feature suggestions) in our
 [GitHub issue tracker][ghi].
 
-## Authors
+With other questions, you may contact [Dr. Chen][xiaoting] (the primary author
+of RELI) or [Dr. Weirauch][matt] via email.
 
-| Name                 | Email                      | Institution
-|----------------------|----------------------------|--------------------------------
-| Dr. Xiaoting Chen    | Xiaoting.Chen@cchmc.org    | Cincinnati Children's Hospital
-| Dr. Matthew Weirauch | Matthew.Weirauch@cchmc.org | Cincinnati Children's Hospital
+## Contributors
+
+| Name                 | Institution                    | Remarks
+|----------------------|--------------------------------|----------------------
+| Dr. Xiaoting Chen    | Cincinnati Children's Hospital | _primary author_
 
 ## Credits
 
@@ -188,3 +190,5 @@ Project avatar based on Wikimedia Commons [Chromosome_18.svg][wmc]
 [cdt]: https://www.eclipse.org/cdt/
 [cyg]: http://cygwin.org/
 [xct]: https://stackoverflow.com/a/32894314
+[xiaoting]: mailto:Xiaoting.Chen%20-at-%20cchmc.org?subject=RELI%20feedback&body=(don't%20forget%20to%20change%20%22-at-%22%20to%20%22%40%22%20before%20sending!)
+[matt]: mailto:Matthew.Weirauch%20-at-%20cchmc.org?subject=RELI%20feedback&body=(don't%20forget%20to%20change%20%22-at-%22%20to%20%22%40%22%20before%20sending!)
