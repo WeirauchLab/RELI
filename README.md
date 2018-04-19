@@ -23,7 +23,7 @@ The output of RELI is a series of statistics based upon the significance of the
 overlap between the input genetic variants and the selected ChIP-seq dataset.
 
 Additional details on RELI and the associated findings can be found in its
-accompanying publication (manuscript currently in revision).
+[accompanying publication][pubmed].
 
 ## Installation on GNU/Linux
 
