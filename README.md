@@ -160,7 +160,16 @@ organism.
 
 ## How to cite
 
-_The corresponding journal article is still under review._
+[_Transcription factors operate across disease loci, with EBNA2 implicated in
+autoimmunity._][pubmed]
+
+Harley JB, Chen X, Pujato M, Miller D, Maddox A, Forney C, Magnusen AF, Lynch A,
+Chetal K, Yukawa M, Barski A, Salomonis N, Kaufman KM, Kottyan LC, Weirauch MT.
+
+_Nat Genet._ 2018 Apr 16. doi: [10.1038/s41588-018-0102-3][doi]. [Epub ahead of
+print]
+
+PMID: 29662164
 
 ## Feedback
 
@@ -185,6 +194,8 @@ Project avatar based on Wikimedia Commons [Chromosome_18.svg][wmc]
 [wmc]: https://commons.wikimedia.org/wiki/File:Chromosome_18.svg
 [fcs]: http://hgdownload.soe.ucsc.edu/admin/exe/linux.x86_64/fetchChromSizes
 [fcsusage]: http://hgdownload.soe.ucsc.edu/admin/exe/linux.x86_64/fetchChromSizes
+[pubmed]: https://www.ncbi.nlm.nih.gov/pubmed/29662164
+[doi]: https://dx.doi.org/10.1038/s41588-018-0102-3
 [ghi]: https://github.com/WeirauchLab/RELI/issues
 [mp]: https://www.macports.org/
 [cdt]: https://www.eclipse.org/cdt/
