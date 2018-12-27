@@ -1,6 +1,7 @@
 .*sw?
 *~
 data/**
+example/Output
 SHA1SUMS
 .data_validated
 *.core
