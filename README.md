@@ -25,7 +25,7 @@ overlap between the input genetic variants and the selected ChIP-seq dataset.
 Additional details on RELI and the associated findings can be found in its
 [accompanying publication][pubmed].
 
-## Installation on GNU/Linux
+## Installation
 
 RELI requires a C++11 compiler (_e.g._ GNU CC 4.7 or higher) and `libgsl` and
 `libgslcblas` from the [GNU Scientific Library][gsl].
@@ -38,6 +38,34 @@ clone the repository with Git:
 
     # Weirauch Lab GitLab
     git clone https://tfwebdev.research.cchmc.org/gitlab/ches2d/RELI_public.git
+
+### Installation with Docker
+
+This is the recommended method if you have some familiarity with Docker, as it
+does not require you to download a compiler or any of the dependencies
+necessary to build RELI from source.
+
+You will need to install the appropriate [Docker client][dockercli] for your
+OS. Please see the [official docs][dockerinst] for help with that.
+
+Once you've cloned the `RELI_public` repository (see above), you can build a
+CentOS 7-based Docker container and compile RELI from source as follows:
+
+```
+cd /path/to/cloned/repo
+docker build -t reli .
+
+# test to see if it works
+docker run -it --rm reli RELI --help
+```
+
+Or you can simply use the pre-build image available on [Docker Hub][hubi]:
+
+```
+docker run -it --rm weirauchlab/reli RELI --help
+```
+
+### Installation on Linux
 
 A GNU-style `Makefile` is provided in the repository. With GSL installed
 system-wide, you can build the RELI binary with just
@@ -59,7 +87,7 @@ which will download and validate the sample datasets automatically, then invoke
 **This test analysis requires around 10 GB of RAM** to finish successfully; 16 GB
 is recommended.
 
-### Toolchain or libraries in non-standard locations
+#### Toolchain or libraries in non-standard locations
 
 The included `Makefile` will respect `CFLAGS` and `LDFLAGS` if set in the
 environment, for example, if you have a locally-built GSL that is installed in
@@ -97,7 +125,7 @@ Projects into Workspace_ and browse to where you cloned the repository.
 If you have problems with `make test` (perhaps you don't have `curl`
 available), you can manually download and extract the sample datasets from
 
-> <https://tf.cchmc.org/external/RELI/data.tar.bz2>
+> <https://tf.cchmc.org/external/RELI/RELI_public_data.tar.bz2>
 
 such that the decompressed data is inside a `data` subdirectory, within the
 `RELI_public` repository you cloned above. A `.zip`-format archive is also
@@ -154,9 +182,9 @@ Be advised, however, that the null model included with the data was generated
 for _Homo sapiens_ at build hg19; using a later "hg" build may invalidate this
 model.
 
-Please contact us via email (or [file an issue][ghi] against the public GitHub
-repository) for additional details, or if you need support for a different
-organism.
+If you need support for a different organism, please contact us via email for
+additional details (see "Feedback" section, below), or [file an issue][ghi]
+against the public GitHub repository.
 
 ## How to cite
 
@@ -191,6 +219,9 @@ Project avatar based on Wikimedia Commons [Chromosome_18.svg][wmc]
 
 [md]: https://help.github.com/categories/writing-on-github/
 [gsl]: https://www.gnu.org/software/gsl/
+[dockercli]: https://hub.docker.com/search/?type=edition&offering=community
+[dockerinst]: https://docs.docker.com/install/
+[hubi]: https://hub.docker.com/r/weirauchlab/reli
 [wmc]: https://commons.wikimedia.org/wiki/File:Chromosome_18.svg
 [fcs]: http://hgdownload.soe.ucsc.edu/admin/exe/linux.x86_64/fetchChromSizes
 [fcsusage]: http://hgdownload.soe.ucsc.edu/admin/exe/linux.x86_64/fetchChromSizes

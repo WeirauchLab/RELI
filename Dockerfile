@@ -11,6 +11,7 @@
 FROM centos:7
 
 # install prerequisite development packages
+RUN yum update -y
 RUN yum install -y gcc gcc-c++ make gsl gsl-devel bzip2 which
 
 RUN mkdir -p /reli/src /reli/example
