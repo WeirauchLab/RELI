@@ -41,7 +41,7 @@ char bufferChar[bufferSize];
 vector<string> RELI::species_name = { "hg19", "mm9" };
 vector<RELI::SNP> RELI::SNP_vec;
 vector<int> RELI::simulated_number_vec;
-vector<RELI::SNP> RELI::SNP_vec_temp; 
+vector<RELI::SNP> RELI::SNP_vec_temp;
 vector<RELI::LD> RELI::LD_vec;
 vector<RELI::LD_template> RELI::LD_template_vec;
 vector<RELI::LD_sim> RELI::LD_sim_vec, RELI::ldsimvec_after_intersection;
@@ -96,7 +96,7 @@ bool RELI::SNPfit(LD LD_A, SNP &tempSNP_A, unsigned int int_A,
 			pos_set.push_back(it);
 		}
 		else{
-			neg_set.push_back(it); 
+			neg_set.push_back(it);
 		}
 	}
 	if (pos_set.size()>0){
@@ -122,11 +122,11 @@ bool RELI::SNPfit(LD LD_A, SNP &tempSNP_A, unsigned int int_A,
 		return false;
 	}
 }
-bool RELI::SNPfit(LD LD_A, 
-	SNP &tempSNP_A, 
+bool RELI::SNPfit(LD LD_A,
+	SNP &tempSNP_A,
 	unsigned int int_A,
-	vector<pair<string, unsigned int>> inVec, 
-	vector<unsigned int> inVec2, 
+	vector<pair<string, unsigned int>> inVec,
+	vector<unsigned int> inVec2,
 	bool inflag){
 	int max_diff;
 	vector<int> pos_set;
@@ -136,7 +136,7 @@ bool RELI::SNPfit(LD LD_A,
 			pos_set.push_back(it);
 		}
 		else{
-			neg_set.push_back(it);    
+			neg_set.push_back(it);
 		}
 	}
 	if (pos_set.size()>0){
@@ -144,7 +144,7 @@ bool RELI::SNPfit(LD LD_A,
 	}
 	if (neg_set.size() > 0){
 		max_diff = max(max_diff, abs(*min_element(neg_set.begin(), neg_set.end())));
-	} 
+	}
 	bool okay = false;
 	for (auto k = 0; k < inVec.size(); ++k){
 		if (int_A - max_diff - tempSNP_A.length >= inVec2.at(k) && int_A + max_diff + tempSNP_A.length <= inVec2.at(k + 1)){
@@ -154,7 +154,7 @@ bool RELI::SNPfit(LD LD_A,
 			okay = true;
 			break;
 		}
-	} 
+	}
 	if (okay == true){
 		return true;
 	}
@@ -162,11 +162,11 @@ bool RELI::SNPfit(LD LD_A,
 		return false;
 	}
 }
-bool RELI::SNPfit_local(LD &LD_A, // 
+bool RELI::SNPfit_local(LD &LD_A, //
 	SNP &tempSNP_A,		
-	unsigned int int_A, 
-	vector<pair<string, unsigned int>> inVec, 
-	vector<unsigned int> inVec2, 
+	unsigned int int_A,
+	vector<pair<string, unsigned int>> inVec,
+	vector<unsigned int> inVec2,
 	bool inflag){
 	int max = LD_A.max_dis;
 	int min = LD_A.min_dis;
@@ -187,12 +187,12 @@ bool RELI::SNPfit_local(LD &LD_A, //
 		return false;
 	}
 }
-bool RELI::SNPfit_goshift(LD &LD_A, 
+bool RELI::SNPfit_goshift(LD &LD_A,
 	SNP &tempSNP_A,		
-	unsigned int int_A, 
-	vector<pair<string, unsigned int>> inVec, 
-	vector<unsigned int> inVec2, 
-	bool inflag){  
+	unsigned int int_A,
+	vector<pair<string, unsigned int>> inVec,
+	vector<unsigned int> inVec2,
+	bool inflag){
 	bool okay = true;
 	tempSNP_A.snp_chr = LD_A.keySNP.snp_chr;
 	tempSNP_A.snp_start = LD_A.keySNP.snp_end;
@@ -205,12 +205,12 @@ bool RELI::SNPfit_goshift(LD &LD_A,
 		return false;
 	}
 }
-bool RELI::SNPfit_local_index_only(LD &LD_A, 
+bool RELI::SNPfit_local_index_only(LD &LD_A,
 	SNP &tempSNP_A,		
-	unsigned int int_A, 
-	vector<pair<string, unsigned int>> inVec, 
-	vector<unsigned int> inVec2, 
-	bool inflag){  
+	unsigned int int_A,
+	vector<pair<string, unsigned int>> inVec,
+	vector<unsigned int> inVec2,
+	bool inflag){
 	int max = *max_element(LD_A.dis2keySNP.begin(), LD_A.dis2keySNP.end());
 	int min = *min_element(LD_A.dis2keySNP.begin(), LD_A.dis2keySNP.end());
 	std::default_random_engine t_randSeed(std::chrono::system_clock::now().time_since_epoch().count());
@@ -239,9 +239,9 @@ void RELI::snpmodifier(SNP &SNP_A, SNP SNP_B, int dist){
 }
 int RELI::get_index_to_be_used(string inChr, int inSt, map<pair<string, unsigned int>, int> inMap){
 	int rtype;
-	vector<pair<unsigned int, int>> tvec;  
+	vector<pair<unsigned int, int>> tvec;
 	for (auto it : inMap){
-		if (it.first.first == inChr){  
+		if (it.first.first == inChr){
 			pair<unsigned int, int> t;
 			t.first = it.first.second;
 			t.second = it.second;
@@ -315,7 +315,7 @@ void RELI::overlapping2(vector<SNP> SNPvecA, vector<bed3col> bedvecA){
 		}
 	}
 }
-void RELI::overlapping3(vector<SNP> SNPvecA, vector<bed3col> bedvecA, vector<unsigned int>& in_LD_unique_key_collector){ 
+void RELI::overlapping3(vector<SNP> SNPvecA, vector<bed3col> bedvecA, vector<unsigned int>& in_LD_unique_key_collector){
 	vector<SNP> tempsnpvec;
 	tempsnpvec = SNPvecA;
 	int k = 0;
@@ -360,7 +360,7 @@ void RELI::overlapping3(vector<SNP> SNPvecA, vector<bed3col> bedvecA, vector<uns
 		}
 	}
 }
-void RELI::overlapping_w_index(vector<SNP> SNPvecA, vector<bed3col> bedvecA, vector<unsigned int>& in_LD_unique_key_collector, map<string, int> _index){  
+void RELI::overlapping_w_index(vector<SNP> SNPvecA, vector<bed3col> bedvecA, vector<unsigned int>& in_LD_unique_key_collector, map<string, int> _index){
 	vector<SNP> tempsnpvec;
 	tempsnpvec = SNPvecA;
 	int k = 0;
@@ -526,7 +526,7 @@ void RELI::createSpeciesMap(bool inBool){
 		}
 		tStream.close();
 	}
-	chromosome_strucuture_val.push_back(0); 
+	chromosome_strucuture_val.push_back(0);
 	for (auto k = 0; k < RELI::chromosome_strucuture.size(); ++k){
 		chromosome_strucuture_val.push_back(chromosome_strucuture_val.back() + chromosome_strucuture.at(k).second);
 		//cout << chromosome_strucuture_val.back() << endl;
@@ -563,7 +563,7 @@ unsigned int RELI::mymin(vector<unsigned int> inVec){
 }
 int RELI::lookback_with_zerocheck(int t){
 	if (t >= RELI::lookback_step){
-		return t - lookback_step;   
+		return t - lookback_step;
 	}
 	else{
 		return 0;
@@ -589,7 +589,7 @@ void RELI::cal_stats(RELI::stats_model inModel){
 		else{
 			RELI::zscore = (RELI::statsvec.at(0) - RELI::mu) / RELI::sd;
 		}
-#ifndef bedsig_debug 
+#ifndef bedsig_debug
 		RELI::pval = gsl_cdf_ugaussian_Q(RELI::zscore);
 #endif
 		RELI::corr_pval = min(RELI::pval*RELI::corr_muliplier, 1.0);
@@ -623,9 +623,9 @@ void RELI::cal_stats(RELI::stats_model inModel){
 		else{
 			RELI::zscore = (RELI::statsvec.at(0) - RELI::mu) / RELI::sd;
 		}
-#ifndef bedsig_debug 
+#ifndef bedsig_debug
 		RELI::pval = gsl_cdf_ugaussian_Q(RELI::zscore);
-#endif 
+#endif
 		RELI::corr_pval = double(greater_or_equal_instance) / double(RELI::statsvec.size());
 
 	}
@@ -637,7 +637,7 @@ void RELI::cal_stats(RELI::stats_model inModel){
 	case binomial:
 		break;
 
-		// flat the 1000 simulations 
+		// flat the 1000 simulations
 	case hypergeometric:
 
 		break;
@@ -664,7 +664,7 @@ void RELI::cal_stats(RELI::stats_model inModel){
 		else{
 			RELI::zscore = (RELI::statsvec.at(0) - RELI::mu) / RELI::sd;
 		}
-#ifndef bedsig_debug 
+#ifndef bedsig_debug
 		RELI::pval = gsl_cdf_ugaussian_Q(RELI::zscore);
 #endif
 		RELI::corr_pval = min(RELI::pval*RELI::corr_muliplier, 1.0);
@@ -698,7 +698,7 @@ void RELI::bed3col::cal_avg_peak_length_adjusted_phastCon_score(){
 					tscore += k.avg_score;
 				}
 			}
-			else{ 
+			else{
 				tscore += k.avg_score;
 			}
 		}
@@ -719,10 +719,10 @@ void RELI::bed3col::cal_avg_peak_length_adjusted_phastCon_score_ez(){
 		else{
 			bad_value++;
 		}
-	} 
+	}
 	if (bad_value < length){
 		this->avg_peak_length_adjusted_phastCon_score = tscore / (length - bad_value);
-	} 
+	}
 }
 void RELI::bed3col::cal_avg_peak_length_adjusted_phastCon_score_ez_50bp(){
 	double bad_value = 0;
@@ -743,7 +743,7 @@ void RELI::bed3col::cal_avg_peak_length_adjusted_phastCon_score_ez_50bp(){
 		this->avg_peak_length_adjusted_phastCon_score = tscore / (length - bad_value);
 	}
 }
-void RELI::target_bed_file::makeIndex(){ 
+void RELI::target_bed_file::makeIndex(){
 	index[myData.at(0).bed_chr] = 0;
 	string prev_chr = myData.at(0).bed_chr;
 	for (auto it = myData.begin(); it != myData.end(); ++it){
@@ -753,7 +753,7 @@ void RELI::target_bed_file::makeIndex(){
 		}
 	}
 }
-void RELI::target_bed_file::makeIndex2(){ 
+void RELI::target_bed_file::makeIndex2(){
 	index[myData.at(0).bed_chr] = 0;
 	string prev_chr = myData.at(0).bed_chr;
 	for (auto it = myData.begin(); it != myData.end(); ++it){
@@ -819,7 +819,7 @@ void RELI::target_bed_file::readingData(string inStr, bool inVal){
 
 			tLDVec.push_back(tld);
 		}
-		std::default_random_engine tSeed(std::chrono::system_clock::now().time_since_epoch().count()); //RNG seed 
+		std::default_random_engine tSeed(std::chrono::system_clock::now().time_since_epoch().count()); //RNG seed
 		std::uniform_int_distribution<unsigned int> tGen(0, (RELI::bg_null_model_data.bin0.size() - 1));// RNG generator
 		for (auto k = tLDVec.begin(); k != tLDVec.end(); ++k){
 			bool tGood;
@@ -838,7 +838,7 @@ void RELI::target_bed_file::readingData(string inStr, bool inVal){
 			t.bed_end = tKeySNP.snp_end;
 
 			this->myData_bgnull.push_back(t);
-			this->myData = this->myData_bgnull;  
+			this->myData = this->myData_bgnull;
 			this->myData_bgnull.clear();
 		}
 	}
@@ -851,9 +851,9 @@ void RELI::target_bed_file::readingData(string inStr, bool inVal){
 void RELI::LD::get_features_within_LDblock(const target_bed_file& rhs){
 	map<string, int> local_map_copy = rhs.index;
 	for (auto k = local_map_copy[this->LD_chr]; k < rhs.myData.size(); ++k){
-		if ((rhs.myData.at(k).bed_chr == this->LD_chr && rhs.myData.at(k).bed_end > this->LD_left_edge && rhs.myData.at(k).bed_end<this->LD_right_edge)  
+		if ((rhs.myData.at(k).bed_chr == this->LD_chr && rhs.myData.at(k).bed_end > this->LD_left_edge && rhs.myData.at(k).bed_end<this->LD_right_edge)
 			|| (rhs.myData.at(k).bed_chr == this->LD_chr && rhs.myData.at(k).bed_start> this->LD_left_edge && rhs.myData.at(k).bed_start < this->LD_right_edge)
-			|| (rhs.myData.at(k).bed_chr == this->LD_chr && rhs.myData.at(k).bed_start< this->LD_left_edge && rhs.myData.at(k).bed_end > this->LD_right_edge)  
+			|| (rhs.myData.at(k).bed_chr == this->LD_chr && rhs.myData.at(k).bed_start< this->LD_left_edge && rhs.myData.at(k).bed_end > this->LD_right_edge)
 			){
 			this->features_within_LDblock.myData.push_back(rhs.myData.at(k));
 		}
@@ -884,7 +884,7 @@ vector<RELI::bed3col> RELI::LD::goShifting_feature_data(){
 	
 	return tVec;
 }
-void RELI::read_ld_file(string inStr){  
+void RELI::read_ld_file(string inStr){
 	ifstream in;
 
 	in.open(inStr);
@@ -983,26 +983,27 @@ void RELI::RELIobj::public_ver_read_data_index(){
 		t.group= linevec.at(6);
 		t.ebv_status = linevec.at(7);
 		t.species = linevec.at(8);
-		 
+		
 		this->dataindexvec.push_back(t);
 	}
 	in.close();
-	cout << "chip-seq index file loaded." << endl; 
+	cout << "chip-seq index file loaded." << endl;
 }
-void RELI::RELIobj::public_ver_set_target_data(){ 
+void RELI::RELIobj::public_ver_set_target_data(){
 	auto k = find(this->dataindexvec.begin(),
-		this->dataindexvec.end(), 
+		this->dataindexvec.end(),
 		this->public_ver_target_label);
 	if (k != this->dataindexvec.end()){
 		this->public_ver_selected_data_index = *k;
 	}
 	else{
-		cerr << "cannot find corresponding data entry in the index file, exiting." << endl;
+		cerr << "cannot find corresponding data entry in the index file, exiting." 
+		     << endl;
 		exit(-1);
 	}
 	this->public_ver_target_data_fname = this->public_ver_data_dir + "/"
 		+ this->public_ver_target_label;
-	cout << "target ChIP-seq file set." << endl; 
+	cout << "target ChIP-seq file set." << endl;
 }
 void RELI::RELIobj::public_ver_read_null(){
 	ifstream in;
@@ -1013,16 +1014,16 @@ bool RELI::RELIobj::minimum_check(){
 
 	cout << "Start Regulatory Element Locus Intersection (RELI) analysis." << endl;
 	cout << "Running arguments: " << endl;
-	cout << "1) phenotype snp file: " << this->public_ver_snp_fname << endl;								 
+	cout << "1) phenotype snp file: " << this->public_ver_snp_fname << endl;								
 	cout << "2) phenotype LD structure file: " << RELI::ldfile << endl;								
 	cout << "3) SNP matching mode: " << RELI::snp_matching << endl;
-	cout << "4) null model file: " << this->public_ver_null_fname << endl;								 
-	cout << "5) dbSNP table file: " << this->public_ver_snp_table_fname << endl;								 
-	cout << "6) target chip-seq label: " << this->public_ver_target_label << endl;										 
-	cout << "7) chip-seq index file: " << this->public_ver_data_index_fname << endl;								 
-	cout << "8) chip-seq data dir: " << this->public_ver_data_dir << endl;				 
-	cout << "9) output dir name: " << this->public_ver_output_dir << endl;								 
-	cout << "10) genome build file: " << RELI::species_chr_mapping_file << endl;									 
+	cout << "4) null model file: " << this->public_ver_null_fname << endl;								
+	cout << "5) dbSNP table file: " << this->public_ver_snp_table_fname << endl;								
+	cout << "6) target chip-seq label: " << this->public_ver_target_label << endl;										
+	cout << "7) chip-seq index file: " << this->public_ver_data_index_fname << endl;								
+	cout << "8) chip-seq data dir: " << this->public_ver_data_dir << endl;				
+	cout << "9) output dir name: " << this->public_ver_output_dir << endl;								
+	cout << "10) genome build file: " << RELI::species_chr_mapping_file << endl;									
 	cout << "11) statistic output file name: " << this->public_ver_output_fname << endl;
 	cout << "12) overlap output file name: " << this->public_ver_output_fname_overlaps << endl;
 	cout << "13) provided phenotype name: " << this->public_ver_phenotype_name << endl;
@@ -1056,17 +1057,17 @@ void RELI::MAF_binned_null_model::loading_null_data(string rhs){
 	in.open(RELI::nullmodelinfilename.c_str());
 	if (!in){
 		cerr << "cannot load selected null model, check with option -null : "
-			 << RELI::nullmodelinfilename << endl;
+		     << RELI::nullmodelinfilename << endl;
 		exit(-1);
 	}
 	if (!RELI::snp_matching){	
-		in.ignore(bufferSize, '\n'); 
+		in.ignore(bufferSize, '\n');
 	}
 	while (!in.eof()){
 		in.getline(bufferChar, bufferSize);
 		in.peek();
 		buffer = bufferChar;
-		if (RELI::snp_matching){ 
+		if (RELI::snp_matching){
 			RELI::binned_null_model_data.bin_map[atoi(linehandler(buffer).at(1).c_str())]->push_back(atoi(linehandler(buffer).at(0).c_str()));
 		}
 		else{
@@ -1108,12 +1109,12 @@ void RELI::RELIobj::create_output_dir(){
 	if (stat(outpath_c, &st) < 0) {
 		if (mkdirat(AT_FDCWD, outpath_c, 0755) < 0 && errno != EEXIST) {
 			cerr << "Unable to create output dir '" << outpath_c << "': "
-				 << strerror(errno) << "." << endl;
+			     << strerror(errno) << "." << endl;
 			exit(1);
 		}
 	} else if (!S_ISDIR(st.st_mode)) {
 		cerr << "Specified output dir '" << outpath_c
-			 << "' is not a directory!" << endl;
+		     << "' is not a directory!" << endl;
 		exit(1);
 	}
 }
@@ -1123,7 +1124,7 @@ void RELI::RELIobj::load_snp_table(){
 	in.open(this->public_ver_snp_table_fname.c_str());
 	if (!in){
 		cerr << "cannot load snp table, please check with option -index "
-			 << this->public_ver_snp_table_fname << endl;
+		     << this->public_ver_snp_table_fname << endl;
 		exit(-1);
 	}
 	in.ignore(lcsize,'\n');
@@ -1151,9 +1152,9 @@ void RELI::RELIobj::load_snp_table(){
 	in.close();
 	cout << "snp table loaded."<< endl;
 }
-void RELI::RELIobj::extract_snp_info(map<char,char> rhs){ 
-	if (RELI::snp_matching){ 
-		for (auto &snp_it : RELI::SNP_vec){		 
+void RELI::RELIobj::extract_snp_info(map<char,char> rhs){
+	if (RELI::snp_matching){
+		for (auto &snp_it : RELI::SNP_vec){		
 			if (this->snptablemap[snp_it.snp_name].chr.size()>0){	// if available in the dbSNP table		
 				snp_it.obs_strand = this->snptablemap[snp_it.snp_name].obs_strand;
 				snp_it._ref_allele = this->snptablemap[snp_it.snp_name].ref_allele;
@@ -1173,8 +1174,8 @@ void RELI::RELIobj::extract_snp_info(map<char,char> rhs){
 						snp_it._alt_allele.push_back(alt_alleles.substr(0, alt_alleles.find_first_of("/")));
 					}
 				}
-				string alt_alleles_2 = this->snptablemap[snp_it.snp_name].alt_allele_info;							 
-				string alt_alleles_freq = this->snptablemap[snp_it.snp_name].alt_allele_freq;	 
+				string alt_alleles_2 = this->snptablemap[snp_it.snp_name].alt_allele_info;							
+				string alt_alleles_freq = this->snptablemap[snp_it.snp_name].alt_allele_freq;	
 				snp_it._MAF_alt_allele_string = alt_alleles_2;
 				if (alt_alleles_2.size() > 0 && alt_alleles_freq.size()>0){
 					vector<double> tvec;
@@ -1186,27 +1187,27 @@ void RELI::RELIobj::extract_snp_info(map<char,char> rhs){
 					snp_it._MAF = *(tvec.end() - 2);	
 					snp_it._MAF_Bin = snp_it.cal_MAF_Bin(snp_it._MAF);
 				}
-				else{ 
+				else{
 					snp_it._MAF = 0.001;
 					snp_it._MAF_Bin = snp_it.cal_MAF_Bin(snp_it._MAF);
 				}
-			} 
+			}
 			else{	
 				snp_it._MAF = 0.001;
 				snp_it._MAF_Bin = snp_it.cal_MAF_Bin(snp_it._MAF);
-			}  
-		} 
-	} 
+			}
+		}
+	}
 	cout << "snp MAF information queried." << endl;
 }
 void RELI::RELIobj::load_ld_snps(bool rhs1, string rhs2){
 	ifstream in;
 	if (rhs1){
-		RELI::read_ld_file(rhs2); 
+		RELI::read_ld_file(rhs2);
 		for (auto it = RELI::LD_template_vec.begin(); it != RELI::LD_template_vec.end(); ++it){
 			RELI::LD newld;  // real LD instance
-			newld.keySNP = *find(RELI::SNP_vec_temp.begin(), RELI::SNP_vec_temp.end(), it->keySNP); 
-			for (auto k = 0; k < it->mySNP.size(); k++){ 
+			newld.keySNP = *find(RELI::SNP_vec_temp.begin(), RELI::SNP_vec_temp.end(), it->keySNP);
+			for (auto k = 0; k < it->mySNP.size(); k++){
 				for (auto snpit = RELI::SNP_vec_temp.begin(); snpit != RELI::SNP_vec_temp.end(); ++snpit){
 					if (it->mySNP.at(k) == snpit->snp_name){
 						newld.mySNP.push_back(*snpit);
@@ -1223,8 +1224,8 @@ void RELI::RELIobj::load_ld_snps(bool rhs1, string rhs2){
 			newld.mySNP.push_back(*snpit);
 
 			RELI::LD_vec.push_back(newld);
-		} 
-	} 
+		}
+	}
 	else{
 		for (auto snpit = RELI::SNP_vec.begin(); snpit != RELI::SNP_vec.end(); ++snpit){
 			RELI::LD newld;
@@ -1236,7 +1237,7 @@ void RELI::RELIobj::load_ld_snps(bool rhs1, string rhs2){
 	}
 	for (auto ldit = RELI::LD_vec.begin(); ldit != RELI::LD_vec.end(); ++ldit){
 		for (auto snpit = ldit->mySNP.begin(); snpit != ldit->mySNP.end(); ++snpit){
-			ldit->dis2keySNP.push_back(snpit->snp_end - ldit->keySNP.snp_end); 
+			ldit->dis2keySNP.push_back(snpit->snp_end - ldit->keySNP.snp_end);
 		}
 	}
 	cout << "LD structure handled. " << endl;
@@ -1250,33 +1251,33 @@ void RELI::RELIobj::output(){
 		<< "\t" << "Cell" << "\t" << "Formal Cell" << "\t" << "Label"
 		<< "\t" << "Intersect" << "\t" << "Total" << "\t" << "Ratio"
 		<< "\t" << "Mean" << "\t" << "Std" << "\t" << "Z-score" << "\t"
-		<< "Relative Risk" << "\t" << "P-val" << "\t" << "Corrected P-val" 
-		<< "\t" << "Null_Model" << "\t" << "Species" << endl; 
+		<< "Relative Risk" << "\t" << "P-val" << "\t" << "Corrected P-val"
+		<< "\t" << "Null_Model" << "\t" << "Species" << endl;
 	out << this->public_ver_phenotype_name
 		<< "\t"<<this->public_ver_ancestry_name
 		<< "\t"<<this->public_ver_selected_data_index.source
 		<< "\t" << this->public_ver_selected_data_index.cell
 		<< "\t" << this->public_ver_selected_data_index.cell_label
 		<< "\t" << this->public_ver_selected_data_index.tf
-		<< "\t" <<  RELI::statsvec[0] 
+		<< "\t" <<  RELI::statsvec[0]
 		<< "\t" << RELI::LD_vec.size()
-		<< "\t" << RELI::statsvec[0] / RELI::LD_vec.size() 
+		<< "\t" << RELI::statsvec[0] / RELI::LD_vec.size()
 		<< "\t" << RELI::mu
-		<< "\t" << RELI::sd 
-		<< "\t" << RELI::zscore 
+		<< "\t" << RELI::sd
+		<< "\t" << RELI::zscore
 		<< "\t";
-		if (RELI::mu != 0){ 
+		if (RELI::mu != 0){
 			out << RELI::statsvec[0] / RELI::mu;
 		}
-		else{ 
-			out << 0; 
+		else{
+			out << 0;
 		}
-	out << "\t" << RELI::pval 
-		<< "\t" << RELI::corr_pval 
-		<< "\t" << this->public_ver_null_fname 
+	out << "\t" << RELI::pval
+		<< "\t" << RELI::corr_pval
+		<< "\t" << this->public_ver_null_fname
 		<< "\t" << this->public_ver_selected_data_index.species
 		<<endl;
-	out.close(); 
+	out.close();
 	out.open(this->public_ver_output_fname_overlaps.c_str());
 	for (auto k : RELI::simulated_number_vec){
 		out << k << endl;
@@ -1291,13 +1292,13 @@ void RELI::RELIobj::sim(){
 		if (i == 0){
 			for (auto LDit = RELI::LD_vec.begin(); LDit != RELI::LD_vec.end(); ++LDit){
 				RELI::LD_sim t_LD_sim;
-				t_LD_sim.unique_key = distance(RELI::LD_vec.begin(), LDit);   
+				t_LD_sim.unique_key = distance(RELI::LD_vec.begin(), LDit);
 				t_LD_sim.mySNP = LDit->mySNP;   	
 				for (auto &tSNP_iter : t_LD_sim.mySNP){
 					tSNP_iter.inherited_unique_key_from_LD = t_LD_sim.unique_key;
 				}
-				t_LD_sim.dis2keySNP = LDit->dis2keySNP;   
-				t_LD_sim.keySNP = LDit->keySNP;  
+				t_LD_sim.dis2keySNP = LDit->dis2keySNP;
+				t_LD_sim.keySNP = LDit->keySNP;
 
 				t_LD_sim.overlap_sim = false;
 				RELI::LD_sim_vec.push_back(t_LD_sim);
@@ -1306,32 +1307,32 @@ void RELI::RELIobj::sim(){
 		if (i>0){
 			for (auto LDit = RELI::LD_vec.begin(); LDit != RELI::LD_vec.end(); ++LDit){
 				RELI::LD_sim t_LD_sim;
-				t_LD_sim.unique_key = distance(RELI::LD_vec.begin(), LDit);  
+				t_LD_sim.unique_key = distance(RELI::LD_vec.begin(), LDit);
 				unsigned int tIndex;
 				RELI::SNP tKeySNP;
-				tKeySNP.length = LDit->keySNP.length;   
+				tKeySNP.length = LDit->keySNP.length;
 				bool datagood = false;
 				if (RELI::snp_matching){
 					std::uniform_int_distribution<unsigned int> distGen(0, (RELI::binned_null_model_data.bin_map[LDit->keySNP._MAF_Bin]->size() - 1));
 					while (datagood != true){
 						tIndex = distGen(randSeed);
-						datagood = RELI::SNPfit(*LDit, 
-							tKeySNP, 
+						datagood = RELI::SNPfit(*LDit,
+							tKeySNP,
 							RELI::binned_null_model_data.bin_map[LDit->keySNP._MAF_Bin]->at(tIndex),
-							RELI::chromosome_strucuture, 
-							RELI::chromosome_strucuture_val, 
+							RELI::chromosome_strucuture,
+							RELI::chromosome_strucuture_val,
 							1);	
 					}
 				}
-				else{ 
+				else{
 					std::uniform_int_distribution<unsigned int> distGen(0, (RELI::binned_null_model_data.bin0.size() - 1));
 					while (datagood != true){
 						tIndex = distGen(randSeed);
-						datagood = RELI::SNPfit(*LDit, 
+						datagood = RELI::SNPfit(*LDit,
 							tKeySNP,
 							RELI::binned_null_model_data.bin0.at(tIndex),
-							RELI::chromosome_strucuture, 
-							RELI::chromosome_strucuture_val, 
+							RELI::chromosome_strucuture,
+							RELI::chromosome_strucuture_val,
 							1);	
 					}
 				}
@@ -1342,17 +1343,17 @@ void RELI::RELIobj::sim(){
 					t_LD_sim.mySNP.push_back(tSNP);
 				}
 				t_LD_sim.overlap_sim = false;
-				RELI::LD_sim_vec.push_back(t_LD_sim); 
+				RELI::LD_sim_vec.push_back(t_LD_sim);
 			}
 		}
-		RELI::SNP_vec_temp.clear(); 
+		RELI::SNP_vec_temp.clear();
 		for (auto ldsimit = RELI::LD_sim_vec.begin(); ldsimit != RELI::LD_sim_vec.end(); ++ldsimit){
 			for (auto snpit = ldsimit->mySNP.begin(); snpit != ldsimit->mySNP.end(); ++snpit){
-				RELI::SNP_vec_temp.push_back(*snpit); 
+				RELI::SNP_vec_temp.push_back(*snpit);
 			}
 		}
 		vector<unsigned int> LD_unique_key_collector;
-		RELI::overlapping3(RELI::SNP_vec_temp, RELI::targetbedinfilevec, LD_unique_key_collector);   // only updated indicator in mapped ldsim instances 
+		RELI::overlapping3(RELI::SNP_vec_temp, RELI::targetbedinfilevec, LD_unique_key_collector);   // only updated indicator in mapped ldsim instances
 		sort(LD_unique_key_collector.begin(), LD_unique_key_collector.end());
 		LD_unique_key_collector.resize(distance(LD_unique_key_collector.begin(), unique(LD_unique_key_collector.begin(), LD_unique_key_collector.end())));
 		RELI::statsvec.push_back(double(LD_unique_key_collector.size()));

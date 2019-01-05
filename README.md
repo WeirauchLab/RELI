@@ -201,6 +201,16 @@ print]
 
 PMID: 29662164
 
+## License
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, version 3.
+
+This program is distributed in the hope that it will be useful, but WITHOUT
+ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE. See [`LICENSE.txt`](LICENSE.txt) for more details.
+
 ## Feedback
 
 Please report any issues with RELI (or feature suggestions) in our
