@@ -156,13 +156,14 @@ int main(int argc, char* argv[]){
 		}
 	}
 	display_RELI();
-	if (argc < 2 || !RELIinstance->minimum_check()) {	// check minimum arguements for run
+	if (argc < 2 || !RELIinstance->minimum_check()) {	// check minimum arguments for run
 		display_help(); 
 	}
 
 	/* 
 		load data and pre-processing 	
 	*/
+    RELIinstance->create_output_dir();
 	RELI::createSpeciesMap(RELI::using_default_species); //	load genome structure
 	RELIinstance->public_ver_read_data_index();	//	read ChIP-seq index file
 	RELIinstance->public_ver_set_target_data();	//	set target ChIP-seq file

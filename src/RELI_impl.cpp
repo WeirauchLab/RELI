@@ -1,6 +1,6 @@
-#include <thread>            
-#include <mutex>               
-#include <condition_variable>  
+#include <thread>
+#include <mutex>
+#include <condition_variable>
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -10,6 +10,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string>
+#include <sstream>
 #include <string.h>
 #include <time.h>
 #include <map>
@@ -19,10 +20,14 @@
 #include <unordered_map>
 #include <chrono>
 #include <cstring>
-#include <queue> 
+#include <queue>
 #include <random>
 #include <assert.h>
-#include "RELI_impl.h"  
+#include "RELI_impl.h"
+
+#include <sys/stat.h> // for mkdir and mkdirat (requires kernel >= 2.6.16)
+#include <fcntl.h>    // for AT_FDCWD
+#include <cerrno>     // for errno
 
 
 using namespace std;
@@ -56,7 +61,6 @@ string RELI::nullmodelinfilename;
 string RELI::dnase_coverage_filename;
 string RELI::snpinfilename;
 string RELI::temp_nullmodelname, RELI::temp_nullmodelcount;
-string RELI::cmdline;
 string RELI::outputpath;
 string RELI::outputpath_simulated_intersection;
 string RELI::ldfile;
@@ -505,7 +509,10 @@ void RELI::createSpeciesMap(bool inBool){
 		ifstream tStream;
 		cout << "using user-provided genome build file: " <<  RELI::species_chr_mapping_file << endl;
 		tStream.open(RELI::species_chr_mapping_file.c_str());
-		if (!tStream){ cerr << "chromosome index file not found."; exit(1); }
+		if (!tStream){
+			cerr << "chromosome index file not found." << endl;
+			exit(1);
+		}
 		while (!tStream.eof()){
 			tStream.getline(bufferChar, bufferSize);
 			tStream.peek();
@@ -920,7 +927,10 @@ void RELI::initiate_BedSig(){
 	//
 	RELI::dnase_coverage_filename = RELI::nullmodelinfiledir + "DnaseCoverage.txt";
 	tin.open(RELI::dnase_coverage_filename.c_str());
-	if (!tin) { cerr << "dnase coverage profile not found" << endl; exit(1); }
+	if (!tin) {
+		cerr << "dnase coverage profile not found" << endl;
+		exit(1);
+	}
 	while (!tin.eof()){
 		tin.getline(bufferChar, bufferSize);
 		tin.peek();
@@ -1002,7 +1012,7 @@ bool RELI::RELIobj::minimum_check(){
 	this->public_ver_output_fname_overlaps = this->public_ver_output_dir + "/" + this->public_ver_target_label + ".RELI.overlaps";
 
 	cout << "Start Regulatory Element Locus Intersection (RELI) analysis." << endl;
-	cout << "Running arguements: " << endl;
+	cout << "Running arguments: " << endl;
 	cout << "1) phenotype snp file: " << this->public_ver_snp_fname << endl;								 
 	cout << "2) phenotype LD structure file: " << RELI::ldfile << endl;								
 	cout << "3) SNP matching mode: " << RELI::snp_matching << endl;
@@ -1044,7 +1054,11 @@ void RELI::MAF_binned_null_model::loading_null_data(string rhs){
 	ifstream in;
 	RELI::nullmodelinfilename = rhs;
 	in.open(RELI::nullmodelinfilename.c_str());
-	if (!in){ cerr << "cannot load selected null model, check with option -null : " << RELI::nullmodelinfilename << endl; exit(-1); }
+	if (!in){
+		cerr << "cannot load selected null model, check with option -null : "
+			 << RELI::nullmodelinfilename << endl;
+		exit(-1);
+	}
 	if (!RELI::snp_matching){	
 		in.ignore(bufferSize, '\n'); 
 	}
@@ -1084,12 +1098,32 @@ void RELI::loadSnpFile(string rhs){
 	in.close();
 	cout << "reading snp file completed." << endl;
 }
+
+void RELI::RELIobj::create_output_dir(){
+	int rv;
+	struct stat st;
+	const char *outpath_c = this->public_ver_output_dir.c_str();
+
+	// don't try to make the directory if it already exists
+	if (stat(outpath_c, &st) < 0) {
+		if (mkdirat(AT_FDCWD, outpath_c, 0755) < 0 && errno != EEXIST) {
+			cerr << "Unable to create output dir '" << outpath_c << "': "
+				 << strerror(errno) << "." << endl;
+			exit(1);
+		}
+	} else if (!S_ISDIR(st.st_mode)) {
+		cerr << "Specified output dir '" << outpath_c
+			 << "' is not a directory!" << endl;
+		exit(1);
+	}
+}
+
 void RELI::RELIobj::load_snp_table(){
 	ifstream in;
 	in.open(this->public_ver_snp_table_fname.c_str());
 	if (!in){
-		cerr << "cannot load snp table, please check with option -index " 
-			<<this->public_ver_snp_table_fname<< endl;
+		cerr << "cannot load snp table, please check with option -index "
+			 << this->public_ver_snp_table_fname << endl;
 		exit(-1);
 	}
 	in.ignore(lcsize,'\n');
@@ -1209,10 +1243,8 @@ void RELI::RELIobj::load_ld_snps(bool rhs1, string rhs2){
 }
 void RELI::RELIobj::output(){
 	ofstream out;
-	RELI::cal_stats(RELI::used_stats_model); 
-    // 'mkdir -p' avoids "file already exists" error
-	RELI::cmdline = "mkdir -p " + this->public_ver_output_dir;
-	system(RELI::cmdline.c_str()); 
+	RELI::cal_stats(RELI::used_stats_model);
+
 	out.open(this->public_ver_output_fname.c_str());
 	out << "Formal Phenotype" << "\t" << "Ancestry" << "\t" << "Source"
 		<< "\t" << "Cell" << "\t" << "Formal Cell" << "\t" << "Label"

@@ -321,6 +321,7 @@ namespace RELI{
 		void public_ver_set_target_data();
 		void public_ver_read_data_index();
 		void public_ver_read_snp_table(); 
+		void create_output_dir();
 		void load_snp_table();
 		void extract_snp_info(map<char,char>);
 		void load_ld_snps(bool, string);

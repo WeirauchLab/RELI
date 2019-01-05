@@ -66,10 +66,10 @@ $(PKGNAME): $(addprefix $(SOURCEDIR)/,$(SOURCES) $(INCLUDES))
 	$(CC) $(CXXFLAGS) -o $(PKGNAME) $(addprefix $(SOURCEDIR)/,$(SOURCES)) \
 	    $(addprefix -l,$(LIBS)) 
 
-test: binary validate-data
+test: binary validatedata
 	cd example && ./example_run.sh
 
-validate-data: fetch-data
+validatedata: fetchdata
 	if [ ! -f .data_validated ]; then \
 		if ( curl "$(DATAURL)/validate.sh" | bash ); then \
 			touch .data_validated; \
@@ -83,7 +83,7 @@ validate-data: fetch-data
 		fi; \
 	fi
 
-fetch-data:
+fetchdata:
 	test -f "$(DATACHECKFILE)" || curl $(DATAURL)/$(DATABZ2) | tar xjf -
 
 # Preserve the complete path of this Makefile in case we were called with
@@ -102,12 +102,15 @@ help:
 	@echo
 	@echo "      $(BOLD)make binary$(RESET)    - (default) build RELI binary"
 	@echo
-	@echo "      $(BOLD)make test$(RESET)      - download sample data and perform"
-	@echo "                       a test analysis"
+	@echo "      $(BOLD)make fetchdata$(RESET) - download sample data"
+	@echo
+	@echo "      $(BOLD)make test$(RESET)      - perform a test analysis"
 	@echo
 	@echo "      $(BOLD)make debug$(RESET)     - build a debuggable RELI binary"
 	@echo
 	@echo "      $(BOLD)make clean$(RESET)     - remove build artifacts"
+	@echo
+	@echo "      $(BOLD)make dataclean$(RESET) - remove downloaded data"
 	@echo
 	@echo "      $(BOLD)make distclean$(RESET) - also remove sample data and output"
 	@echo "                       files from example analysis"
@@ -131,7 +134,7 @@ clean:
 
 exclean:
 	# clean example analysis output files
-	-rm -f example/Output/*
+	-rm -f output/*
 
 dataclean:
 	# remove all downloaded data files
