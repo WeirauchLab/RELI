@@ -8,16 +8,15 @@
 # ================================================================
 
 # start with https://store.docker.com/images/centos
-FROM centos:7
+FROM alpine
 
 # install prerequisite development packages
-RUN yum update -y
-RUN yum install -y gcc gcc-c++ make gsl gsl-devel bzip2 which
+RUN apk update
+RUN apk add g++ make gsl gsl-dev bzip2 bash which
 
-RUN mkdir -p /reli/src /reli/example
+RUN mkdir -p /reli/src
 WORKDIR /reli
 COPY src src/
-COPY example example/
 COPY Makefile .
 
 # build RELI from source
