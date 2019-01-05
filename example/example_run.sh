@@ -1,6 +1,6 @@
 #!/bin/bash
 # Example invocation of the Regulatory Locus Intersection (RELI) tool using
-# sample data in ./example (European ancestry)
+# sample data in the 'example' subdirectory (European ancestry)
 
 RELIBIN=${RELI_BINARY:-../RELI}
 DATADIR=${RELI_DATA_DIR:-../data}
