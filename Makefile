@@ -14,7 +14,7 @@
 PKGNAME=RELI
 # FIXME: this needs to be updated with a pre-commit hook, or we need to pass
 # the value of this variable as a preprocessor flag (-D) to g++
-PKGVER=1.0.1
+PKGVER=0.91
 
 # Enable debug switches by running 'make DEBUG=1' or 'make debug'
 # (what this changes: don't add -O [optimize], add -ggdb)
@@ -135,6 +135,8 @@ clean:
 exclean:
 	# clean example analysis output files
 	-rm -f output/*
+	# CWL workflow dumps stuff in the c.w.d.
+	-rm -f *.stats *.overlaps *stdout.txt *stderr.txt
 
 dataclean:
 	# remove all downloaded data files
