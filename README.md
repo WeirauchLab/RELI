@@ -48,8 +48,16 @@ necessary to build RELI from source.
 You will need to install the appropriate [Docker client][dockercli] for your
 OS. Please see the [official docs][dockerinst] for help with that.
 
-Once you've cloned the `RELI_public` repository (see above), you can build a
-CentOS 7-based Docker container and compile RELI from source as follows:
+The most straightforward way to get started is to simply use the pre-built
+image available on [Docker Hub][hubi]:
+
+```
+docker run -it --rm weirauchlab/reli RELI --help
+```
+
+Or, if you've cloned the `RELI_public` repository (see above), you can locally
+build the CentOS 7-based Docker container and compile RELI from source as
+follows:
 
 ```
 cd /path/to/cloned/repo
@@ -57,12 +65,6 @@ docker build -t reli .
 
 # test to see if it works
 docker run -it --rm reli RELI --help
-```
-
-Or you can simply use the pre-build image available on [Docker Hub][hubi]:
-
-```
-docker run -it --rm weirauchlab/reli RELI --help
 ```
 
 ### Installation on Linux

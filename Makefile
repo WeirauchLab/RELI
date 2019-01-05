@@ -14,7 +14,7 @@
 PKGNAME=RELI
 # FIXME: this needs to be updated with a pre-commit hook, or we need to pass
 # the value of this variable as a preprocessor flag (-D) to g++
-PKGVER=0.90
+PKGVER=1.0.1
 
 # Enable debug switches by running 'make DEBUG=1' or 'make debug'
 # (what this changes: don't add -O [optimize], add -ggdb)
