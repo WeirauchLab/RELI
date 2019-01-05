@@ -1,0 +1,27 @@
+ancestry: EU
+build_file:
+  class: File
+  path: ../data/GenomeBuild/hg19.txt
+chipseq_data_dir:
+  class: Directory
+  path: ../data/ChIP-seq
+corr: 1544
+dbsnp_table:
+  class: File
+  path: ../data/SNPtable/SNPtable
+index_file:
+  class: File
+  path: ../data/ChIPseq.index
+ld_file:
+  class: File
+  path: ../example/SLE_EU.ld
+match: true
+'null':
+  class: File
+  path: ../data/Null/CommonSNP_MAFmatch
+phenotype: Systemic_Lupus_Erythematosus
+rep: 2000
+snp_file:
+  class: File
+  path: ../example/SLE_EU.snp
+target: hg19_0302
