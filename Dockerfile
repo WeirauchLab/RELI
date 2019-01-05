@@ -23,3 +23,7 @@ COPY Makefile .
 RUN make
 RUN ln -s RELI reli
 ENV PATH $PATH:/reli
+
+# Remove unnecessary packages pulled in as dependencies of g++
+RUN apk del g++
+RUN apk add libstdc++ libgcc
