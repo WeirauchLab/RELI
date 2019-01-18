@@ -1,9 +1,13 @@
 # ================================================================
 #
 #   Dockerfile for RELI (public release)
-#
+#   Version:  0.0.2
 #   Author:   Kevin Ernst <kevin.ernst -at- cchmc.org>
 #   Date:     25 July 2018
+#
+#   Build:    docker build --rm -t weirauchlab/reli:v0.0.2 -f Dockerfile .
+#   Pull:     docker pull weirauchlab/reli:v0.0.2
+#   Run:      docker run --rm -ti weirauchlab/reli:v0.0.2
 #
 # ================================================================
 
