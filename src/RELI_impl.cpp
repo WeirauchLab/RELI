@@ -1065,7 +1065,7 @@ void RELI::MAF_binned_null_model::loading_null_data(string rhs){
 	RELI::nullmodelinfilename = rhs;
 	in.open(RELI::nullmodelinfilename.c_str());
 	if (!in){
-		cerr << "cannot load selected null model, check with option -null : "
+		cerr << "cannot load selected null model, check with option --null : "
 		     << RELI::nullmodelinfilename << endl;
 		exit(-1);
 	}
@@ -1089,7 +1089,7 @@ void RELI::MAF_binned_null_model::loading_null_data(string rhs){
 void RELI::loadSnpFile(string rhs){
 	ifstream in;
 	in.open(rhs);
-	if (!in){ cout << "cannot load phenotype snp file, check with option -snp_file: " <<rhs<< endl; exit(1); }
+	if (!in){ cout << "cannot load phenotype snp file, check with option --snp_file: " <<rhs<< endl; exit(1); }
 	while (!in.eof()){
 		in.getline(bufferChar, 5000);
 		in.peek();
@@ -1132,7 +1132,7 @@ void RELI::RELIobj::load_snp_table(){
 	ifstream in;
 	in.open(this->public_ver_snp_table_fname.c_str());
 	if (!in){
-		cerr << "cannot load snp table, please check with option -index "
+		cerr << "cannot load snp table, please check with option --index "
 		     << this->public_ver_snp_table_fname << endl;
 		exit(-1);
 	}
