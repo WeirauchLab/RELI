@@ -1132,7 +1132,7 @@ void RELI::RELIobj::load_snp_table(){
 	ifstream in;
 	in.open(this->public_ver_snp_table_fname.c_str());
 	if (!in){
-		cerr << "cannot load snp table, please check with option --index "
+		cerr << "cannot load snp table, please check with option --dbsnp "
 		     << this->public_ver_snp_table_fname << endl;
 		exit(-1);
 	}
