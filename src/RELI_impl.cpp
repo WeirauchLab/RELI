@@ -23,6 +23,7 @@
 #include <queue>
 #include <random>
 #include <assert.h>
+#include <unistd.h>
 #include "RELI_impl.h"
 
 #include <sys/stat.h> // for mkdir and mkdirat (requires kernel >= 2.6.16)
@@ -960,57 +961,65 @@ double RELI::binomial_pvalue_appr(int _total, int _overlap, double _prob){
 	return gsl_cdf_ugaussian_Q((_overlap - _total*_prob) / sqrt(_total*_prob*(1 - _prob)));
 }
 void RELI::RELIobj::public_ver_read_data_index(){
-	ifstream in;
-	in.open(this->public_ver_data_index_fname.c_str());
-	if (!in){
-		cerr << "cannot open data index file, please check with option -index" << endl;
-		exit(-1);
-	}
-	in.ignore(bufferSize, '\n');
-	while (!in.eof()){
-		in.getline(bufferChar, bufferSize);
-		in.peek();
-		buffer = bufferChar;
-		auto linevec = linehandler(buffer);
+    if (access(this->public_ver_target_label.c_str(), F_OK ) != -1 ) {
+        cout << "Skip loading chip-seq index file, because --target points to file" << endl;
+    } else {
+        ifstream in;
+        in.open(this->public_ver_data_index_fname.c_str());
+        if (!in){
+            cerr << "cannot open data index file, please check with option -index" << endl;
+            exit(-1);
+        }
+        in.ignore(bufferSize, '\n');
+        while (!in.eof()){
+            in.getline(bufferChar, bufferSize);
+            in.peek();
+            buffer = bufferChar;
+            auto linevec = linehandler(buffer);
 
-		RELI::data_index t;
-		t.datalabel = linevec.at(0);
-		t.source = linevec.at(1);
-		t.cell = linevec.at(2);
-		t.tf = linevec.at(3);
-		t.cell_label = linevec.at(4);
-		t.pmid = linevec.at(5);
-		t.group= linevec.at(6);
-		t.ebv_status = linevec.at(7);
-		t.species = linevec.at(8);
-		
-		this->dataindexvec.push_back(t);
-	}
-	in.close();
-	cout << "chip-seq index file loaded." << endl;
+            RELI::data_index t;
+            t.datalabel = linevec.at(0);
+            t.source = linevec.at(1);
+            t.cell = linevec.at(2);
+            t.tf = linevec.at(3);
+            t.cell_label = linevec.at(4);
+            t.pmid = linevec.at(5);
+            t.group= linevec.at(6);
+            t.ebv_status = linevec.at(7);
+            t.species = linevec.at(8);
+
+            this->dataindexvec.push_back(t);
+        }
+        in.close();
+        cout << "chip-seq index file loaded." << endl;
+    }
 }
 void RELI::RELIobj::public_ver_set_target_data(){
-	auto k = find(this->dataindexvec.begin(),
-		this->dataindexvec.end(),
-		this->public_ver_target_label);
-	if (k != this->dataindexvec.end()){
-		this->public_ver_selected_data_index = *k;
+	if (access(this->public_ver_target_label.c_str(), F_OK ) != -1 ) {
+		this->public_ver_target_data_fname = this->public_ver_target_label;
 	}
-	else{
-		cerr << "cannot find corresponding data entry in the index file, exiting." 
-		     << endl;
-		exit(-1);
+	else {
+		auto k = find(this->dataindexvec.begin(),
+					  this->dataindexvec.end(),
+					  this->public_ver_target_label);
+		if (k != this->dataindexvec.end()){
+			this->public_ver_selected_data_index = *k;
+		}
+		else{
+			cerr << "cannot find corresponding data entry in the index file, exiting."
+				 << endl;
+			exit(-1);
+		}
+		this->public_ver_target_data_fname = this->public_ver_data_dir + "/" + this->public_ver_target_label;
 	}
-	this->public_ver_target_data_fname = this->public_ver_data_dir + "/"
-		+ this->public_ver_target_label;
 	cout << "target ChIP-seq file set." << endl;
 }
 void RELI::RELIobj::public_ver_read_null(){
 	ifstream in;
 }
 bool RELI::RELIobj::minimum_check(){
-	this->public_ver_output_fname = this->public_ver_output_dir + "/" + this->public_ver_target_label + ".RELI.stats";
-	this->public_ver_output_fname_overlaps = this->public_ver_output_dir + "/" + this->public_ver_target_label + ".RELI.overlaps";
+	this->public_ver_output_fname = this->public_ver_output_dir + "/RELI.stats";
+	this->public_ver_output_fname_overlaps = this->public_ver_output_dir + "/RELI.overlaps";
 
 	cout << "Start Regulatory Element Locus Intersection (RELI) analysis." << endl;
 	cout << "Running arguments: " << endl;
@@ -1019,7 +1028,7 @@ bool RELI::RELIobj::minimum_check(){
 	cout << "3) SNP matching mode: " << RELI::snp_matching << endl;
 	cout << "4) null model file: " << this->public_ver_null_fname << endl;								
 	cout << "5) dbSNP table file: " << this->public_ver_snp_table_fname << endl;								
-	cout << "6) target chip-seq label: " << this->public_ver_target_label << endl;										
+	cout << "6) target chip-seq label / file: " << this->public_ver_target_label << endl;
 	cout << "7) chip-seq index file: " << this->public_ver_data_index_fname << endl;								
 	cout << "8) chip-seq data dir: " << this->public_ver_data_dir << endl;				
 	cout << "9) output dir name: " << this->public_ver_output_dir << endl;								

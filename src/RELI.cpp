@@ -39,6 +39,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <cstring>
 #include <queue>
 #include <random>
+#include <unistd.h>
 #include "RELI_impl.h"
 
 using namespace std;
@@ -61,9 +62,9 @@ void display_help(){
 	cout << endl;
 	cout << "--snp FILE: Phenotype snp file in 4 column bed format. [required]" << endl;
 	cout << "--ld FILE: Phenotype linkage disequilibrium structure for snps, default: no ld file. [optional]" << endl;
-	cout << "--index FILE: ChIP-seq index file. [required]" << endl;
-	cout << "--data DIR: Specify directory where ChIP-seq data are stored. [required]" << endl;
-	cout << "--target STRING: Target label of ChIP-seq experiment to be tested from index file. [required]" << endl;
+	cout << "--index FILE: ChIP-seq index file. [required if --target points to the label]" << endl;
+	cout << "--data DIR: Specify directory where ChIP-seq data are stored. [required if --target points to the label]" << endl;
+	cout << "--target STRING: Target label of ChIP-seq experiment to be tested from index file. Or path to the file [required]" << endl;
 	cout << "--build FILE: Genome build file. [required]" << endl;
 	cout << "--null FILE: Null model file. [required]" << endl;
 	cout << "--dbsnp FILE: dbSNP table file. [required]" << endl;
@@ -135,8 +136,15 @@ int main(int argc, char* argv[]){
 		if (strcmp(argv[i], "--corr") == 0){  // bonferroni correction multiplier
 			RELI::corr_muliplier = atof(argv[i + 1]);
 		}
-		if (strcmp(argv[i], "--target") == 0){  // string corresponding to target ChIP-seq data
+		if (strcmp(argv[i], "--target") == 0){  // string corresponding to target ChIP-seq data or path to file
 			RELIinstance->public_ver_target_label = argv[i + 1];
+            if (access(RELIinstance->public_ver_target_label.c_str(), F_OK ) != -1 ) {
+				// if --target points to the file, --data and --index are not required anymore and should be set to True
+				RELIinstance->flag_chipseq_data_dir = true;
+				RELIinstance->flag_chipseq_data_index = true;
+                RELIinstance->public_ver_data_dir = "Ignored";
+                RELIinstance->public_ver_data_index_fname = "Ignored";
+			}
 			RELIinstance->flag_target_label = true;
 		}
 		if (strcmp(argv[i], "--index") == 0){  // ChIP-seq index file
