@@ -22,10 +22,22 @@ DEBUG=0
 
 # Prepends $(SOURCEDIR) to all the sources and builds a binary in the top
 # level of the repo
-SOURCEDIR=src
+SOURCEDIR ?= src
 SOURCES=RELI.cpp RELI_impl.cpp
 INCLUDES=RELI_impl.h
-DATAURL=https://tf.cchmc.org/external/RELI/data.tar.bz2
+
+DATADIR ?= data
+DATAURL=https://tf.cchmc.org/external/RELI
+DATABZ2=RELI_public_data.tar.bz2
+DATACHECKFILE=$(DATADIR)/ChIPseq.index
+
+ifeq ($(shell uname -s), Darwin)
+# Part of Perl, and should be included w/ macOS
+SHASUM=shasum -a 1
+else
+# part of GNU 'coreutils'; should be on most Linuxes
+SHASUM=sha1sum
+endif
 
 # Required (third-party) libraries
 LIBS=gsl gslcblas
@@ -62,16 +74,12 @@ $(PKGNAME): $(addprefix $(SOURCEDIR)/,$(SOURCES) $(INCLUDES))
 	$(CC) $(CXXFLAGS) -o $(PKGNAME) $(addprefix $(SOURCEDIR)/,$(SOURCES)) \
 	    $(addprefix -l,$(LIBS)) 
 
-clean:
-	-rm -f a.out a.exe *.o $(PKGNAME) $(PKGNAME).exe core.* vgcore.*
+test: binary validatedata
+	cd example && ./example_run.sh
 
-test: binary validate-data
-	pushd example && ./example_run.sh
-	-popd
-
-validate-data: fetch-data
+validatedata: fetchdata
 	if [ ! -f .data_validated ]; then \
-		if data/validate.sh; then \
+		if ( curl "$(DATAURL)/validate.sh" | bash ); then \
 			touch .data_validated; \
 		else \
 			echo >&2;                                                             \
@@ -83,8 +91,8 @@ validate-data: fetch-data
 		fi; \
 	fi
 
-fetch-data:
-	test -x data/validate.sh || curl $(DATAURL) | tar xjf -
+fetchdata:
+	test -f "$(DATACHECKFILE)" || curl $(DATAURL)/$(DATABZ2) | tar xjf -
 
 # Preserve the complete path of this Makefile in case we were called with
 # something like 'make -f Makefile.WL'. According to §5.6.3 of the manual, the
@@ -100,13 +108,22 @@ help:
 	@echo
 	@echo "  Try one of these:"
 	@echo
-	@echo "      $(BOLD)make binary$(RESET) - (default target) build the RELI binary"
+	@echo "      $(BOLD)make binary$(RESET)    - (default) build RELI binary"
 	@echo
-	@echo "      $(BOLD)make test$(RESET)   - download sample data and perform a test analysis"
+	@echo "      $(BOLD)make fetchdata$(RESET) - download sample data"
 	@echo
-	@echo "      $(BOLD)make debug$(RESET)  - build a debuggable version of the RELI binary"
+	@echo "      $(BOLD)make test$(RESET)      - perform a test analysis"
 	@echo
-	@echo "      $(BOLD)make help$(RESET)   - you're looking at it"
+	@echo "      $(BOLD)make debug$(RESET)     - build a debuggable RELI binary"
+	@echo
+	@echo "      $(BOLD)make clean$(RESET)     - remove build artifacts"
+	@echo
+	@echo "      $(BOLD)make dataclean$(RESET) - remove downloaded data"
+	@echo
+	@echo "      $(BOLD)make distclean$(RESET) - also remove sample data and output"
+	@echo "                       files from example analysis"
+	@echo
+	@echo "      $(BOLD)make help$(RESET)      - you're looking at it ;-)"
 	@echo
 	@echo
 	@echo "  For more help, see https://tf.cchmc.org/s/reli-readme"
@@ -119,3 +136,19 @@ install:
 	@echo
 	@echo "Not a supported target (yet). Stay tuned."
 	@echo
+
+clean:
+	-rm -f a.out a.exe *.o $(PKGNAME) $(PKGNAME).exe core.* vgcore.*
+
+exclean:
+	# clean example analysis output files
+	-rm -f output/*
+	# CWL workflow dumps stuff in the c.w.d.
+	-rm -f *.stats *.overlaps *stdout.txt *stderr.txt
+
+dataclean:
+	# remove all downloaded data files
+	-rm -rf $(DATADIR)
+	-rm -f .data_validated
+
+distclean: clean exclean dataclean
