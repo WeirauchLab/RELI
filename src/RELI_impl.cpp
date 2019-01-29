@@ -36,6 +36,7 @@ char bufferChar[bufferSize];
 vector<string> RELI::species_name = { "hg19", "mm9" };
 vector<RELI::SNP> RELI::SNP_vec;
 vector<int> RELI::simulated_number_vec;
+vector<string> RELI::overlapped_rsids;
 vector<RELI::SNP> RELI::SNP_vec_temp; 
 vector<RELI::LD> RELI::LD_vec;
 vector<RELI::LD_template> RELI::LD_template_vec;
@@ -311,7 +312,8 @@ void RELI::overlapping2(vector<SNP> SNPvecA, vector<bed3col> bedvecA){
 		}
 	}
 }
-void RELI::overlapping3(vector<SNP> SNPvecA, vector<bed3col> bedvecA, vector<unsigned int>& in_LD_unique_key_collector){ 
+void RELI::overlapping3(vector<SNP> SNPvecA, vector<bed3col> bedvecA, vector<unsigned int>& in_LD_unique_key_collector,
+	vector<string> & rsid_collector, int _iter_number){
 	vector<SNP> tempsnpvec;
 	tempsnpvec = SNPvecA;
 	int k = 0;
@@ -330,6 +332,9 @@ void RELI::overlapping3(vector<SNP> SNPvecA, vector<bed3col> bedvecA, vector<uns
 					(bedvecA.at(k).bed_start >= snpit->snp_start && bedvecA.at(k).bed_end <= snpit->snp_end)
 					){
 					in_LD_unique_key_collector.push_back(snpit->inherited_unique_key_from_LD);
+					if (_iter_number == 0) {
+						rsid_collector.push_back(snpit->snp_name);
+					}
 					break;
 				}
 				if (bedvecA.at(k).bed_start >= snpit->snp_end || bedvecA.at(k).bed_chr != snpit->snp_chr){
@@ -347,6 +352,9 @@ void RELI::overlapping3(vector<SNP> SNPvecA, vector<bed3col> bedvecA, vector<uns
 					(bedvecA.at(k).bed_start >= snpit->snp_start && bedvecA.at(k).bed_end <= snpit->snp_end)
 					){
 					in_LD_unique_key_collector.push_back(snpit->inherited_unique_key_from_LD);
+					if (_iter_number == 0) {
+						rsid_collector.push_back(snpit->snp_name);
+					}
 					break;
 				}
 				if (bedvecA.at(k).bed_start >= snpit->snp_end || bedvecA.at(k).bed_chr != snpit->snp_chr){
@@ -1000,7 +1008,7 @@ void RELI::RELIobj::public_ver_read_null(){
 bool RELI::RELIobj::minimum_check(){
 	this->public_ver_output_fname = this->public_ver_output_dir + "/" + this->public_ver_target_label + ".RELI.stats";
 	this->public_ver_output_fname_overlaps = this->public_ver_output_dir + "/" + this->public_ver_target_label + ".RELI.overlaps";
-
+	this->public_ver_output_fname_rsids = this->public_ver_output_dir + "/" + this->public_ver_target_label + ".RELI.rsids";
 	cout << "Start Regulatory Element Locus Intersection (RELI) analysis." << endl;
 	cout << "Running arguements: " << endl;
 	cout << "1) phenotype snp file: " << this->public_ver_snp_fname << endl;								 
@@ -1013,8 +1021,9 @@ bool RELI::RELIobj::minimum_check(){
 	cout << "8) chip-seq data dir: " << this->public_ver_data_dir << endl;				 
 	cout << "9) output dir name: " << this->public_ver_output_dir << endl;								 
 	cout << "10) genome build file: " << RELI::species_chr_mapping_file << endl;									 
-	cout << "11) statistic output file name: " << this->public_ver_output_fname << endl;
-	cout << "12) overlap output file name: " << this->public_ver_output_fname_overlaps << endl;
+	cout << "11) statistics output file name: " << this->public_ver_output_fname << endl;
+	cout << "12) overlapped locus numbers output file name: " << this->public_ver_output_fname_overlaps << endl;
+	cout << "13) overlapped snps output file name: " << this->public_ver_output_fname_rsids << endl;
 	cout << "13) provided phenotype name: " << this->public_ver_phenotype_name << endl;
 	cout << "14) provided ancestry name: " << this->public_ver_ancestry_name << endl;
 	//
@@ -1250,6 +1259,14 @@ void RELI::RELIobj::output(){
 		out << k << endl;
 	}
 	out.close();
+	sort(RELI::overlapped_rsids.begin(), RELI::overlapped_rsids.end());
+	RELI::overlapped_rsids.resize(distance(RELI::overlapped_rsids.begin(), unique(RELI::overlapped_rsids.begin(), RELI::overlapped_rsids.end())));
+	out.open(this->public_ver_output_fname_rsids.c_str());
+	for (auto k : RELI::overlapped_rsids) {
+		out << k << endl;
+	}
+	out.close();
+
 	cout << "RELI analysis completed, check output folder for exciting discoveries!" << endl;
 }
 void RELI::RELIobj::sim(){
@@ -1320,7 +1337,7 @@ void RELI::RELIobj::sim(){
 			}
 		}
 		vector<unsigned int> LD_unique_key_collector;
-		RELI::overlapping3(RELI::SNP_vec_temp, RELI::targetbedinfilevec, LD_unique_key_collector);   // only updated indicator in mapped ldsim instances 
+		RELI::overlapping3(RELI::SNP_vec_temp, RELI::targetbedinfilevec, LD_unique_key_collector,RELI::overlapped_rsids,i);   // only updated indicator in mapped ldsim instances 
 		sort(LD_unique_key_collector.begin(), LD_unique_key_collector.end());
 		LD_unique_key_collector.resize(distance(LD_unique_key_collector.begin(), unique(LD_unique_key_collector.begin(), LD_unique_key_collector.end())));
 		RELI::statsvec.push_back(double(LD_unique_key_collector.size()));

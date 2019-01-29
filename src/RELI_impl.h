@@ -300,6 +300,7 @@ namespace RELI{
 		string public_ver_output_dir;
 		string public_ver_output_fname;		// initialized as target label + "RELI.stats"
 		string public_ver_output_fname_overlaps;		// initialized as target label + "RELI.overlaps"
+		string public_ver_output_fname_rsids;			// initialized as target label + "RELI.rsids"
 		unordered_map<string, RELI::snp_table_data> snptablemap;
 		string public_ver_phenotype_name;
 		string public_ver_ancestry_name;
@@ -363,6 +364,7 @@ namespace RELI{
 	extern vector<pair<string, unsigned int>> chromosome_strucuture;
 	extern vector<unsigned int> chromosome_strucuture_val;
 	extern vector<int> simulated_number_vec;
+	extern vector<string> overlapped_rsids;
 	extern vector<string> species_name;
 	extern string TFtype;
 	extern string targetbedinfilename;
@@ -417,7 +419,7 @@ namespace RELI{
 	void callSpeciesMap();
 	void snpmodifier(SNP &, SNP, int);
 	void overlapping2(vector<SNP>, vector<bed3col>);
-	void overlapping3(vector<SNP>, vector<bed3col>, vector<unsigned int>&);
+	void overlapping3(vector<SNP>, vector<bed3col>, vector<unsigned int>&, vector<string>&, int);
 	void overlapping_w_index(vector<SNP>, vector<bed3col>, vector<unsigned int>&, map<string, int>);
 	void createSpeciesMap(bool);
 	void cal_stats(stats_model);
