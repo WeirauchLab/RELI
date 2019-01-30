@@ -25,7 +25,27 @@ overlap between the input genetic variants and the selected ChIP-seq dataset.
 Additional details on RELI and the associated findings can be found in its
 [accompanying publication][pubmed].
 
-## Installation on GNU/Linux
+## Quick Start
+
+If you have the [Common Workflow Language's `cwltool`][cwltool] already
+installed and [Docker] available on your system, this is the most
+straightforward way to run RELI on some [sample data][sampledata]:
+
+```bash
+# clone the public repository and check out the 'cwl-docker-workflow' branch
+git clone https://github.com/WeirauchLab/RELI.git
+cd RELI
+git checkout cwl-docker-workflow
+
+# retrieve sample data and use CWL to run with example input parameters
+make fetchdata
+cwltool workflow/reli-docker.cwl workflow/reli-example-eu-ancestry.yaml
+```
+
+This will run RELI on a small input set of ChIP-seq data of European ancestry
+using a set of lupus (SLE)-associated SNPs.
+
+## Installation
 
 RELI requires a C++11 compiler (_e.g._ GNU CC 4.7 or higher) and `libgsl` and
 `libgslcblas` from the [GNU Scientific Library][gsl].
@@ -33,16 +53,50 @@ RELI requires a C++11 compiler (_e.g._ GNU CC 4.7 or higher) and `libgsl` and
 You may download the latest release as a compressed archive from GitHub, or
 clone the repository with Git:
 
-    # GitHub
-    git clone https://github.com/WeirauchLab/RELI.git
+```bash
+# GitHub
+git clone https://github.com/WeirauchLab/RELI.git
 
-    # Weirauch Lab GitLab
-    git clone https://tfwebdev.research.cchmc.org/gitlab/ches2d/RELI_public.git
+# Weirauch Lab GitLab
+git clone https://tfwebdev.research.cchmc.org/gitlab/ches2d/RELI_public.git
+```
+
+### Installation with Docker
+
+This is the recommended method if you have some familiarity with [Docker], as
+it does not require you to download a compiler or any of the dependencies
+necessary to build RELI from source.
+
+You will need to install the appropriate [Docker client][dockercli] for your
+OS. Please see the [official docs][dockerinst] for help with that.
+
+The most straightforward way to get started is to simply use the pre-built
+image available on [Docker Hub][dockerimg]:
+
+```bash
+docker run -it --rm weirauchlab/reli RELI --help
+```
+
+Or, if you've cloned the `RELI_public` repository (see above), you can locally
+build the CentOS 7-based Docker container and compile RELI from source as
+follows:
+
+```bash
+cd /path/to/cloned/repo
+docker build -t reli .
+
+# test to see if it works
+docker run -it --rm reli RELI --help
+```
+
+### Installation on Linux
 
 A GNU-style `Makefile` is provided in the repository. With GSL installed
 system-wide, you can build the RELI binary with just
 
-    make
+```bash
+make
+```
 
 then run `./RELI` with no arguments to verify that you have a working binary
 (you should get a help screen).
@@ -51,7 +105,9 @@ then run `./RELI` with no arguments to verify that you have a working binary
 In order to run a test analysis, **you need to download the sample data**
 either manually (see the next section) or just type
 
-    make test
+```bash
+make test
+```
 
 which will download and validate the sample datasets automatically, then invoke
 `example/example_run.sh` to invoke RELI on the sample data.
@@ -59,13 +115,15 @@ which will download and validate the sample datasets automatically, then invoke
 **This test analysis requires around 10 GB of RAM** to finish successfully; 16 GB
 is recommended.
 
-### Toolchain or libraries in non-standard locations
+#### Toolchain or libraries in non-standard locations
 
 The included `Makefile` will respect `CFLAGS` and `LDFLAGS` if set in the
 environment, for example, if you have a locally-built GSL that is installed in
 a non-standard place (such as in your home directory):
 
-    CFLAGS=-I/path/to/include LDFLAGS=-L/path/to/lib make
+```bash
+CFLAGS=-I/path/to/include LDFLAGS=-L/path/to/lib make
+```
 
 If `g++` is not available in your `PATH` (or it has a different name), you will
 likely want to modify the Makefile directly, beginning around line 33 with the
@@ -97,7 +155,7 @@ Projects into Workspace_ and browse to where you cloned the repository.
 If you have problems with `make test` (perhaps you don't have `curl`
 available), you can manually download and extract the sample datasets from
 
-> <https://tf.cchmc.org/external/RELI/data.tar.bz2>
+> <https://tf.cchmc.org/external/RELI/RELI_public_data.tar.bz2>
 
 such that the decompressed data is inside a `data` subdirectory, within the
 `RELI_public` repository you cloned above. A `.zip`-format archive is also
@@ -154,9 +212,9 @@ Be advised, however, that the null model included with the data was generated
 for _Homo sapiens_ at build hg19; using a later "hg" build may invalidate this
 model.
 
-Please contact us via email (or [file an issue][ghi] against the public GitHub
-repository) for additional details, or if you need support for a different
-organism.
+If you need support for a different organism, please contact us via email for
+additional details (see "Feedback" section, below), or [file an issue][ghi]
+against the public GitHub repository.
 
 ## How to cite
 
@@ -170,6 +228,16 @@ _Nat Genet._ 2018 Apr 16. doi: [10.1038/s41588-018-0102-3][doi]. [Epub ahead of
 print]
 
 PMID: 29662164
+
+## License
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, version 3.
+
+This program is distributed in the hope that it will be useful, but WITHOUT
+ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE. See [`LICENSE.txt`](LICENSE.txt) for more details.
 
 ## Feedback
 
@@ -191,6 +259,12 @@ Project avatar based on Wikimedia Commons [Chromosome_18.svg][wmc]
 
 [md]: https://help.github.com/categories/writing-on-github/
 [gsl]: https://www.gnu.org/software/gsl/
+[cwltool]: https://github.com/common-workflow-language/cwltool
+[sampledata]: https://tf.cchmc.org/external/RELI/
+[docker]: https://www.docker.com/
+[dockercli]: https://hub.docker.com/search/?type=edition&offering=community
+[dockerinst]: https://docs.docker.com/install/
+[dockerimg]: https://hub.docker.com/r/weirauchlab/reli
 [wmc]: https://commons.wikimedia.org/wiki/File:Chromosome_18.svg
 [fcs]: http://hgdownload.soe.ucsc.edu/admin/exe/linux.x86_64/fetchChromSizes
 [fcsusage]: http://hgdownload.soe.ucsc.edu/admin/exe/linux.x86_64/fetchChromSizes

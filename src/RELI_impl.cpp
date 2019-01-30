@@ -1024,8 +1024,8 @@ bool RELI::RELIobj::minimum_check(){
 	cout << "11) statistics output file name: " << this->public_ver_output_fname << endl;
 	cout << "12) overlapped locus numbers output file name: " << this->public_ver_output_fname_overlaps << endl;
 	cout << "13) overlapped snps output file name: " << this->public_ver_output_fname_rsids << endl;
-	cout << "13) provided phenotype name: " << this->public_ver_phenotype_name << endl;
-	cout << "14) provided ancestry name: " << this->public_ver_ancestry_name << endl;
+	cout << "14) provided phenotype name: " << this->public_ver_phenotype_name << endl;
+	cout << "15) provided ancestry name: " << this->public_ver_ancestry_name << endl;
 	//
 	if (!RELI::snp_matching){
 		return (this->flag_input_snp

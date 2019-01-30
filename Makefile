@@ -118,6 +118,8 @@ help:
 	@echo
 	@echo "      $(BOLD)make clean$(RESET)     - remove build artifacts"
 	@echo
+	@echo "      $(BOLD)make exclean$(RESET)   - clean up after example analysis"
+	@echo
 	@echo "      $(BOLD)make dataclean$(RESET) - remove downloaded data"
 	@echo
 	@echo "      $(BOLD)make distclean$(RESET) - also remove sample data and output"
@@ -144,7 +146,7 @@ exclean:
 	# clean example analysis output files
 	-rm -f output/*
 	# CWL workflow dumps stuff in the c.w.d.
-	-rm -f *.stats *.overlaps *stdout.txt *stderr.txt
+	-rm -f *.stats *.rsids *.overlaps *stdout.txt *stderr.txt
 
 dataclean:
 	# remove all downloaded data files
