@@ -962,7 +962,7 @@ double RELI::binomial_pvalue_appr(int _total, int _overlap, double _prob){
 }
 void RELI::RELIobj::public_ver_read_data_index(){
     if (access(this->public_ver_target_label.c_str(), F_OK ) != -1 ) {
-        cout << "Skip loading chip-seq index file, because --target points to file" << endl;
+        cout << "Skip loading chip-seq index file, because -target points to file" << endl;
     } else {
         ifstream in;
         in.open(this->public_ver_data_index_fname.c_str());
@@ -1065,7 +1065,7 @@ void RELI::MAF_binned_null_model::loading_null_data(string rhs){
 	RELI::nullmodelinfilename = rhs;
 	in.open(RELI::nullmodelinfilename.c_str());
 	if (!in){
-		cerr << "cannot load selected null model, check with option --null : "
+		cerr << "cannot load selected null model, check with option -null : "
 		     << RELI::nullmodelinfilename << endl;
 		exit(-1);
 	}
@@ -1089,7 +1089,7 @@ void RELI::MAF_binned_null_model::loading_null_data(string rhs){
 void RELI::loadSnpFile(string rhs){
 	ifstream in;
 	in.open(rhs);
-	if (!in){ cout << "cannot load phenotype snp file, check with option --snp_file: " <<rhs<< endl; exit(1); }
+	if (!in){ cout << "cannot load phenotype snp file, check with option -snp_file: " <<rhs<< endl; exit(1); }
 	while (!in.eof()){
 		in.getline(bufferChar, 5000);
 		in.peek();
@@ -1132,7 +1132,7 @@ void RELI::RELIobj::load_snp_table(){
 	ifstream in;
 	in.open(this->public_ver_snp_table_fname.c_str());
 	if (!in){
-		cerr << "cannot load snp table, please check with option --dbsnp "
+		cerr << "cannot load snp table, please check with option -dbsnp "
 		     << this->public_ver_snp_table_fname << endl;
 		exit(-1);
 	}
