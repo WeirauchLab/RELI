@@ -1018,8 +1018,12 @@ void RELI::RELIobj::public_ver_read_null(){
 	ifstream in;
 }
 bool RELI::RELIobj::minimum_check(){
-	this->public_ver_output_fname = this->public_ver_output_dir + "/RELI.stats";
-	this->public_ver_output_fname_overlaps = this->public_ver_output_dir + "/RELI.overlaps";
+    if (!this->flag_output_prefix){
+        this->public_ver_output_prefix = "RELI";
+    }
+
+	this->public_ver_output_fname = this->public_ver_output_dir + "/" + this->public_ver_output_prefix + ".stats";
+	this->public_ver_output_fname_overlaps = this->public_ver_output_dir + "/" + this->public_ver_output_prefix + ".overlaps";
 
 	cout << "Start Regulatory Element Locus Intersection (RELI) analysis." << endl;
 	cout << "Running arguments: " << endl;
@@ -1031,12 +1035,13 @@ bool RELI::RELIobj::minimum_check(){
 	cout << "6) target chip-seq label / file: " << this->public_ver_target_label << endl;
 	cout << "7) chip-seq index file: " << this->public_ver_data_index_fname << endl;								
 	cout << "8) chip-seq data dir: " << this->public_ver_data_dir << endl;				
-	cout << "9) output dir name: " << this->public_ver_output_dir << endl;								
-	cout << "10) genome build file: " << RELI::species_chr_mapping_file << endl;									
-	cout << "11) statistic output file name: " << this->public_ver_output_fname << endl;
-	cout << "12) overlap output file name: " << this->public_ver_output_fname_overlaps << endl;
-	cout << "13) provided phenotype name: " << this->public_ver_phenotype_name << endl;
-	cout << "14) provided ancestry name: " << this->public_ver_ancestry_name << endl;
+	cout << "9) output dir name: " << this->public_ver_output_dir << endl;
+    cout << "10) output file prefix: " << this->public_ver_output_prefix << endl;
+	cout << "11) genome build file: " << RELI::species_chr_mapping_file << endl;
+	cout << "12) statistic output file name: " << this->public_ver_output_fname << endl;
+	cout << "13) overlap output file name: " << this->public_ver_output_fname_overlaps << endl;
+	cout << "14) provided phenotype name: " << this->public_ver_phenotype_name << endl;
+	cout << "15) provided ancestry name: " << this->public_ver_ancestry_name << endl;
 	//
 	if (!RELI::snp_matching){
 		return (this->flag_input_snp

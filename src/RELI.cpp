@@ -69,6 +69,7 @@ void display_help(){
 	cout << "-null FILE: Null model file. [required]" << endl;
 	cout << "-dbsnp FILE: dbSNP table file. [required]" << endl;
 	cout << "-out DIR: Specify output directory name under current working folder. [required]" << endl;
+    cout << "-prefix STRING: Specify output files prefix. [optional]" << endl;
 	cout << "-match: Boolean switch to turn on minor allele frequency based matching, default: off. [optional]" << endl;
 	cout << "-rep NUMBER: Number of permutation/simulation to be performed, default: 2000. [optional]" << endl;
 	cout << "-corr NUMBER: Bonferroni correction multiplier for multiple test, default: 1 [optional]" << endl;
@@ -130,6 +131,10 @@ int main(int argc, char* argv[]){
 			RELIinstance->public_ver_output_dir = argv[i + 1];
 			RELIinstance->flag_output_dir = true;
 		}
+        if (strcmp(argv[i], "-prefix") == 0){  // output file prefix
+            RELIinstance->public_ver_output_prefix = argv[i + 1];
+            RELIinstance->flag_output_prefix = true;
+        }
 		if (strcmp(argv[i], "-rep") == 0){  // replication number
 			RELI::repmax = atoi(argv[i + 1]);
 		}
