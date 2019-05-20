@@ -298,6 +298,7 @@ namespace RELI{
 		data_index public_ver_selected_data_index;	// selected index obj 
 		string public_ver_snp_table_fname;	// snp table
 		string public_ver_output_dir;
+        string public_ver_output_prefix;    // output files prefix
 		string public_ver_output_fname;		// initialized as target label + "RELI.stats"
 		string public_ver_output_fname_overlaps;		// initialized as target label + "RELI.overlaps"
 		unordered_map<string, RELI::snp_table_data> snptablemap;
@@ -313,6 +314,7 @@ namespace RELI{
 		bool flag_genome_build;
 		bool flag_chipseq_data_dir;
 		bool flag_output_dir;
+        bool flag_output_prefix;
 		/*
 			functions
 		*/
@@ -349,6 +351,7 @@ namespace RELI{
 			this->flag_genome_build = false;
 			this->flag_chipseq_data_dir = false;
 			this->flag_output_dir = false;
+            this->flag_output_prefix = false;
 		}
 	};
 	//variables  
