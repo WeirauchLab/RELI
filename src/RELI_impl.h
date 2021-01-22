@@ -21,7 +21,7 @@ namespace RELI{
 	#define BedSigFastaDir ""
 
 	extern vector<string> linehandler(string);
-	//classes 
+	//classes
 	class phastConData{
 	public:
 		int bin;
@@ -38,7 +38,7 @@ namespace RELI{
 			return  (this->chr == rhs.chr && this->st == rhs.st && this->end == rhs.end);
 		}
 	};
-	class bed3col{  
+	class bed3col{
 	public:
 		string bed_chr;
 		unsigned int bed_start;
@@ -53,7 +53,7 @@ namespace RELI{
 			return (this->bed_chr < rhs.bed_chr || (this->bed_chr == rhs.bed_chr && this->bed_start < rhs.bed_start));
 		}
 		vector<double> ez_phastCon_score_vec;
-		vector<double> ez_phastCon_score_vec_padding_50bp; 
+		vector<double> ez_phastCon_score_vec_padding_50bp;
 	};
 	class target_bed_file{
 	public:
@@ -61,7 +61,7 @@ namespace RELI{
 		vector<bed3col> myData;
 		vector<bed3col> myData_bgnull;
 		map<string, int> index;
-		map<pair<string, unsigned int>, int> index2;	
+		map<pair<string, unsigned int>, int> index2;
 		void makeIndex();
 		void makeIndex2();
 		void readingData(string, bool);
@@ -71,15 +71,15 @@ namespace RELI{
 		double sd_phastCons_score;
 		void cal_avg_phastCons_score();
 	};
-	class SNP{  
+	class SNP{
 	public:
 		unsigned int inherited_unique_key_from_LD;
 		string snp_chr;
 		unsigned int snp_start;
 		unsigned int snp_end;
-		unsigned int length;		
-		string snp_name;			
-		string snp_type;    
+		unsigned int length;
+		string snp_name;
+		string snp_type;
 		string obs_strand;
 		string _ref_allele;
 		vector<string> _alt_allele;
@@ -112,12 +112,12 @@ namespace RELI{
 			return (this->snp_name == rhs);
 		}
 	};
-	class LD_template{  
+	class LD_template{
 	public:
 		vector<string> mySNP;
 		string keySNP;
 	};
-	class LD{   
+	class LD{
 	public:
 		vector<SNP> mySNP;
 		SNP keySNP;
@@ -133,7 +133,7 @@ namespace RELI{
 		void get_features_within_LDblock(const target_bed_file& rhs);
 		vector<bed3col> goShifting_feature_data();
 	};
-	class LD_sim :public LD{   
+	class LD_sim :public LD{
 	public:
 		bool overlap_sim;
 		unsigned int unique_key;
@@ -195,7 +195,7 @@ namespace RELI{
 	public:
 		map<pair<int, int>, vector<unsigned int>> bin_map;
 	};
-	class resultClass{	
+	class resultClass{
 	public:
 		string resultLine;
 		string track;
@@ -252,7 +252,7 @@ namespace RELI{
 	class RELIobj{public:
 		static const int lcsize = 500000000;
 		char linechar[lcsize];
-		string line; 
+		string line;
 		string dnaSeqReverse(string inSeq, map<char, char> thismap){
 			string tempseq;
 			for (string::reverse_iterator sit = inSeq.rbegin(); sit != inSeq.rend(); ++sit){
@@ -264,18 +264,18 @@ namespace RELI{
 
 		/*
 			variables and data containers
-		*/ 
+		*/
 		string public_ver_snp_fname;		// phenotype snp after LD expansion
 		string public_ver_ld_fname;			// ld structure
 		string public_ver_genome_build_fname;	// build
-		string public_ver_null_fname;	// null model	
+		string public_ver_null_fname;	// null model
 		string public_ver_null_index_fname;	// null model index
 		string public_ver_data_dir;		// chipseq data
 		string public_ver_target_label;			// target label
 		string public_ver_target_data_fname;	// target file name: dir + target label
 		string public_ver_data_index_fname;	// chipseq index
 		vector<data_index> dataindexvec;		// index obj vec
-		data_index public_ver_selected_data_index;	// selected index obj 
+		data_index public_ver_selected_data_index;	// selected index obj
 		string public_ver_snp_table_fname;	// snp table
 		string public_ver_output_dir;
 		string public_ver_output_fname;		// initialized as target label + "RELI.stats"
@@ -297,11 +297,11 @@ namespace RELI{
 		/*
 			functions
 		*/
-		void public_ver_read_null(); 
+		void public_ver_read_null();
 		void public_ver_output();
 		void public_ver_set_target_data();
 		void public_ver_read_data_index();
-		void public_ver_read_snp_table(); 
+		void public_ver_read_snp_table();
 		void load_snp_table();
 		void extract_snp_info(map<char,char>);
 		void load_ld_snps(bool, string);
@@ -319,7 +319,7 @@ namespace RELI{
 			this->ATGCmap['N'] = 'N';
 			this->public_ver_phenotype_name = ".";
 			this->public_ver_ancestry_name = ".";
-			this->public_ver_debug = false;	
+			this->public_ver_debug = false;
 			this->flag_input_snp=false;
 			this->flag_ld_file = false;
 			this->flag_dbsnp_table = false;
@@ -331,14 +331,14 @@ namespace RELI{
 			this->flag_output_dir = false;
 		}
 	};
-	//variables  
-	enum stats_model{ normal, empirical, phasetype, binomial, hypergeometric, fishers_exact }; 
-	// external variables 
-	extern vector<SNP> SNP_vec; 	
-	extern vector<SNP> SNP_vec_temp;   
-	extern vector<LD> LD_vec;	
-	extern vector<LD_template> LD_template_vec; 	
-	extern vector<LD_sim> LD_sim_vec, ldsimvec_after_intersection; 	
+	//variables
+	enum stats_model{ normal, empirical, phasetype, binomial, hypergeometric, fishers_exact };
+	// external variables
+	extern vector<SNP> SNP_vec;
+	extern vector<SNP> SNP_vec_temp;
+	extern vector<LD> LD_vec;
+	extern vector<LD_template> LD_template_vec;
+	extern vector<LD_sim> LD_sim_vec, ldsimvec_after_intersection;
 	extern vector<bed3col> targetbedinfilevec;
 	extern vector<double> statsvec;
 	extern vector<pair<string, unsigned int>> chromosome_strucuture;
@@ -394,7 +394,7 @@ namespace RELI{
 	bool snpsort(SNP, SNP);
 	unsigned int mymax(vector<unsigned int>);
 	unsigned int mymin(vector<unsigned int>);
-	const int lookback_step = 50; // 
+	const int lookback_step = 50; //
 	int lookback_with_zerocheck(int);
 	void callSpeciesMap();
 	void snpmodifier(SNP &, SNP, int);
@@ -414,6 +414,6 @@ namespace RELI{
 	double binomial_pvalue_appr(int, int, double);
 	void loadSnpFile(string);
 }
-// end of RELI namespace  
+// end of RELI namespace
 
 #endif
