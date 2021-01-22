@@ -11,42 +11,45 @@
 ##   Date:     06 July 2015                                           ##
 ##                                                                    ##
 ########################################################################
-PKGNAME=RELI
+PKGNAME = RELI
 # FIXME: this needs to be updated with a pre-commit hook, or we need to pass
 # the value of this variable as a preprocessor flag (-D) to g++
-PKGVER=0.90
+PKGVER = 0.90
 
 # Enable debug switches by running 'make DEBUG=1' or 'make debug'
 # (what this changes: don't add -O [optimize], add -ggdb)
-DEBUG=0
+#DEBUG ?= 0
 
 # Prepends $(SOURCEDIR) to all the sources and builds a binary in the top
 # level of the repo
 SOURCEDIR ?= src
-SOURCES=RELI.cpp RELI_impl.cpp
-INCLUDES=RELI_impl.h
+SOURCES = RELI.cpp RELI_impl.cpp
+INCLUDES = RELI_impl.h
 
 DATADIR ?= data
-DATAURL=https://tf.cchmc.org/external/RELI
-DATABZ2=RELI_public_data.tar.bz2
-DATACHECKFILE=$(DATADIR)/ChIPseq.index
+DATAURL = https://tf.cchmc.org/external/RELI
+DATABZ2 = RELI_public_data.tar.bz2
+DATACHECKFILE = $(DATADIR)/ChIPseq.index
 
 ifeq ($(shell uname -s), Darwin)
 # Part of Perl, and should be included w/ macOS
-SHASUM=shasum -a 1
+SHASUM = shasum -a 1
+# assume MacPorts and set paths for libs/includes
+LDFLAGS = -L/opt/local/lib
+CFLAGS = -I/opt/local/include
 else
 # part of GNU 'coreutils'; should be on most Linuxes
-SHASUM=sha1sum
+SHASUM = sha1sum
 endif
 
 # Required (third-party) libraries
-LIBS=gsl gslcblas
+LIBS = gsl gslcblas
 
-CC=g++
+CC = g++
 # if you need to specify additional include/lib paths on your system (e.g.,
 # macOS MacPorts) set CFLAGS and LDFLAGS in the environment before calling
 # 'make'; see the README for an example for macOS
-CXXFLAGS=$(CFLAGS) $(LDFLAGS) -std=c++11 -I$(SOURCEDIR)
+CXXFLAGS = $(CFLAGS) $(LDFLAGS) -std=c++11 -I$(SOURCEDIR)
 ifeq ($(DEBUG), 1)
 # enable debugging with gdb
 CXXFLAGS += -ggdb -Wall -Wno-sign-compare -Wno-parentheses
@@ -60,12 +63,12 @@ endif
 # Don't set these if there isn't a $TERM environment variable (e.g., 'make
 # clusterbuild')
 ifneq ($(strip $(TERM)),)
-BOLD=$(shell tput bold)
-RED=$(shell tput setaf 1)
-BLUE=$(shell tput setaf 4)
-UL=$(shell tput sgr 0 1)
-GREEN=$(shell tput setaf 2)
-RESET=$(shell tput sgr0 )
+BOLD = $(shell tput bold)
+RED = $(shell tput setaf 1)
+BLUE = $(shell tput setaf 4)
+UL = $(shell tput sgr 0 1)
+GREEN = $(shell tput setaf 2)
+RESET = $(shell tput sgr0 )
 endif
 
 # To make Eclipse happy; this is the default target for Makefile projects
@@ -144,6 +147,7 @@ install:
 
 clean:
 	-rm -f a.out a.exe *.o $(PKGNAME) $(PKGNAME).exe core.* vgcore.*
+	-rm -rf *.dSYM
 
 exclean:
 	# clean example analysis output files
