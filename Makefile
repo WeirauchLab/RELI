@@ -43,6 +43,9 @@ endif
 LIBS=gsl gslcblas
 
 CC=g++
+# if you need to specify additional include/lib paths on your system (e.g.,
+# macOS MacPorts) set CFLAGS and LDFLAGS in the environment before calling
+# 'make'; see the README for an example for macOS
 CXXFLAGS=$(CFLAGS) $(LDFLAGS) -std=c++11 -I$(SOURCEDIR)
 ifeq ($(DEBUG), 1)
 # enable debugging with gdb

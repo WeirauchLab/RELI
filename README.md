@@ -137,8 +137,14 @@ addition to GNU/Linux):
 * Windows with [Cygwin][cyg] and GCC 5.4.0 (ensure the `gcc-g++`, `make`,
   `gsl`, and `libgsl-devel`, and `curl` packages are installed, at a minimum)
 
-* Mac OS X 10.11.6 (El Capitan) with LLVM 8.0.0 (provided by the
-  [Xcode Command Line Tools][xct]) and GSL installed from [MacPorts][mp] 
+* macOS 10.14.6 (Mojave) with LLVM 10.0.1 (clang-1001.0.46.4) from the
+  [Xcode Command Line Tools][xct] and GSL installed from [MacPorts][mp] 
+  * you need to specify paths to MacPorts' includes/libs like this,
+    before running `make`
+
+      ```bash
+      export CFLAGS=-I/opt/local/include LDFLAGS=-L/opt/local/lib
+      ```
 
 On Windows, make sure you run `make` (or the `example/example_run.sh` script)
 from within the Cygwin shell, _not_ the Windows Command Prompt or PowerShell.
@@ -224,8 +230,8 @@ autoimmunity._][pubmed]
 Harley JB, Chen X, Pujato M, Miller D, Maddox A, Forney C, Magnusen AF, Lynch A,
 Chetal K, Yukawa M, Barski A, Salomonis N, Kaufman KM, Kottyan LC, Weirauch MT.
 
-_Nat Genet._ 2018 Apr 16. doi: [10.1038/s41588-018-0102-3][doi]. [Epub ahead of
-print]
+_Nat Genet._ 2018 Apr 16. doi: [10.1038/s41588-018-0102-3][doi]. Epub 2018 Apr
+16. 
 
 PMID: 29662164
 
