@@ -17,59 +17,94 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #include <iostream>
+#include <cstring>      // for strcmp, strncmp
+#include <cstdlib>      // for EXIT_SUCCESS, EXIT_FAILURE
 #include "RELI_impl.h"
+#include "config.h"
 
 using namespace std;
 using namespace RELI;
 
 
-void display_RELI(){
-	cout << "|---------------------------------------------------------------|" << endl;
-	cout << "|                                                               |" << endl;
-	cout << "|     Regulatory Element Locus Intersection (RELI) Analysis     |" << endl;
-	cout << "|                    Current version: 0.90                      |" << endl;
-	cout << "|                                                               |" << endl;
-	cout << "|---------------------------------------------------------------|" << endl;
-
+void display_banner() {
+	cout << "+-------------------------------------------------------------------------+" << endl
+	     << "|          Regulatory Element Locus Intersection (RELI) Analysis          |" << endl
+	     << "|                           Current version: 0.90                         |" << endl
+	     << "+-------------------------------------------------------------------------+" << endl
+	     << endl;
 }
-void display_help(){
 
-	cout << "Usage:	./RELI [options]" << endl;
-	cout << "OPTIONS are:" << endl;
-	cout << "" << endl;
-	cout << "-snp FILE: Phenotype snp file in 4 column bed format. [required]" << endl;
-	cout << "-ld FILE: Phenotype linkage disequilibrium structure for snps, default: no ld file. [optional]" << endl;
-	cout << "-index FILE: ChIP-seq index file. [required]" << endl;
-	cout << "-data DIR: Specify directory where ChIP-seq data are stored. [required]" << endl;
-	cout << "-target STRING: Target label of ChIP-seq experiment to be tested from index file. [required]" << endl;
-	cout << "-build FILE: Genome build file. [required]" << endl;
-	cout << "-null FILE: Null model file. [required]" << endl;
-	cout << "-dbsnp FILE: dbSNP table file. [required]" << endl;
-	cout << "-out DIR: Specify output directory name under currentg working folder. [required]" << endl;
-	cout << "-match: Boolean switch to turn on minor allele frequency based matching, default: off. [optional]" << endl;
-	cout << "-rep NUMBER: Number of permutation/simulation to be performed, default: 2000. [optional]" << endl;
-	cout << "-corr NUMBER: Bonferroni correction multiplier for multiple test, default: 1 [optional]" << endl;
-	cout << "-phenotype STRING: User provided phenotype name, default: \".\". [optional]" << endl;
-	cout << "-ancestry STRING: User provided ancestry name, default: \".\". [optional]" << endl;
-	cout << "" << endl;
-	cout << "EXAMPLE:" << endl;
-	cout << "../script/RELI \\"<<endl;
-	cout << "-snp SLE_EU.snp  \\"<<endl;
-	cout << "-ld SLE_EU.ld \\" << endl;
-	cout << "-index ../data/ChIPseq.index \\" << endl;
-	cout << "-data ../data/ChIP-seq \\" << endl;
-	cout << "-target hg19_0302 \\"<<endl;
-	cout << "-build ../data/GenomeBuild/hg19.txt \\" << endl;
-	cout << "-null ../data/Null/CommonSNP_MAFmatch \\" << endl;
-	cout << "-dbsnp ../data/SNPtable/SNPtable \\" << endl;
-	cout << "-out Output   \\"<<endl;
-	cout << "-match \\"<<endl;
-	cout << "-rep 2000 \\"<<endl;
-	cout << "-corr 1544 \\"<<endl;
-	cout << "-phenotype Systemic_Lupus_Erythematosus \\"<<endl;
-	cout << "-ancestry EU " << endl;
+void display_help(int ret=EXIT_SUCCESS, int level=HELP_BRIEF) {
+	display_banner();
 
-	exit(-1);
+	cout << "  usage:" << endl
+	     << "    RELI [-h | -help | --help | -help-all] [-V | -version]" << endl
+	     << "    RELI -snp FILE -ld FILE -index FILE -data DIR -target STRING"<< endl
+	     << "         -build FILE -null FILE -dnsnp FILE -out DIR [-rep NUMBER]" << endl
+	     << "         [-corr NUMBER] [-phenotype STRING] [-ancestry STRING]" << endl
+	     << endl;
+
+	if (level < HELP_OPTIONS) {
+		cout << "  Hint: Try 'RELI -h' for explanations of the options." << endl
+		     << "  Please report issues at " RELI_ISSUE_TRACKER << endl
+		     << endl;
+		exit(ret);
+	}
+
+	cout << "  where:" << endl
+	     << "    -h, -help, --help  displays this help" << endl
+	     << "    -help-all          displays full help, including examples" << endl
+	     << "    -V, -version       displays the RELI version number and quits" << endl
+	     << "    -snp FILE          (required) phenotype SNP file in 4-column BED format" << endl
+	     << "    -ld FILE           phenotype linkage disequilibrium structure for SNPs" << endl
+	     << "                       [default: no LD file]" << endl
+	     << "    -index FILE        (required) ChIP-seq index file." << endl
+	     << "    -data DIR          (required) directory where ChIP-seq data are stored." << endl
+	     << "    -target STRING     (required) target label of ChIP-seq experiment to be" << endl
+	     << "                       tested from index file" << endl
+	     << "    -build FILE        (required) specifies the genome build file" << endl
+	     << "    -null FILE         (required) specifies the null model file" << endl
+	     << "    -dbsnp FILE        (required) specifies the dbSNP table file" << endl
+	     << "    -out DIR           (required) output directory name to be created inside" << endl
+	     << "                       inside the current working directory" << endl
+	     << "    -match             Boolean switch to enable minor allele frequency based" << endl
+	     << "                       matching [default: off]" << endl
+	     << "    -rep NUMBER        specifies number of permutations/simulations to be" << endl
+	     << "                       performed [default: 2000]" << endl
+	     << "    -corr NUMBER       Bonferroni correction multiplier for multiple tests" << endl
+	     << "                       [default: 1]" << endl
+	     << "    -phenotype STRING  user-specified phenotype name [default: \".\"]" << endl
+	     << "    -ancestry STRING   user-specified ancestry name [default: \".\"]" << endl
+	     << endl;
+
+	if (level < HELP_EXAMPLES) {
+		cout << "  Hint: Try 'RELI -help-all' for example usage." << endl
+		     << "  Please report issues at " RELI_ISSUE_TRACKER << endl
+		     << endl;
+		exit(ret);
+	}
+
+	cout << "  example:" << endl
+	     << "    RELI \\" << endl
+	     << "      -snp SLE_EU.snp \\" << endl
+	     << "      -ld SLE_EU.ld \\" << endl
+	     << "      -index data/ChIPseq.index \\" << endl
+	     << "      -data data/ChIP-seq \\" << endl
+	     << "      -target hg19_0302 \\"<< endl
+	     << "      -build data/GenomeBuild/hg19.txt \\" << endl
+	     << "      -null data/Null/CommonSNP_MAFmatch \\" << endl
+	     << "      -dbsnp data/SNPtable/SNPtable \\" << endl
+	     << "      -out Output \\" << endl
+	     << "      -match \\" << endl
+	     << "      -rep 2000 \\" << endl
+	     << "      -corr 1544 \\" << endl
+	     << "      -phenotype Systemic_Lupus_Erythematosus \\ " << endl
+	     << "      -ancestry EU" << endl
+	     << endl
+	     << "  Please report issues at " RELI_ISSUE_TRACKER << endl
+	     << endl;
+
+	exit(ret);
 }
 
 
@@ -78,7 +113,22 @@ int main(int argc, char* argv[]){
 		initilize RELI instance and handle options
 	*/
     RELI::RELIobj *RELIinstance = new RELI::RELIobj;
+
 	for (auto i = 1; i < argc; ++i){
+		if (strcmp(argv[i], "-help-all") == 0 ||
+			strcmp(argv[i], "--help-all") == 0) {
+			display_help(EXIT_SUCCESS, HELP_EXAMPLES);
+		}
+		if (strncmp(argv[i], "-h", 2) == 0 ||
+			strcmp(argv[i], "--help") == 0) {
+			display_help(EXIT_SUCCESS, HELP_OPTIONS);
+		}
+        if (strncmp(argv[i], "-V", 2) == 0 ||
+            strncmp(argv[i], "-vers", 5) == 0 ||
+		    strncmp(argv[i], "--vers", 6) == 0) {
+            cout << "RELI v" RELI_VERSION << endl;
+            exit(EXIT_SUCCESS);
+        }
 		if (strcmp(argv[i], "-null") == 0){		// null model
 			RELIinstance->public_ver_null_fname = argv[i + 1];
 			RELIinstance->flag_null_file = true;
@@ -133,20 +183,22 @@ int main(int argc, char* argv[]){
 			RELIinstance->public_ver_ancestry_name= argv[i + 1];
 		}
 	}
-	display_RELI();
-	if (argc < 2 || !RELIinstance->minimum_check()) {	// check minimum arguements for run
-		display_help();
+
+	if (argc < 2 || !RELIinstance->minimum_check()) {	// check minimum arguments for run
+		display_help(EXIT_FAILURE);
 	}
 
+	display_banner();
+	
 	/*
 		load data and pre-processing
 	*/
 	RELI::createSpeciesMap(RELI::using_default_species); //	load genome structure
 	RELIinstance->public_ver_read_data_index();	//	read ChIP-seq index file
 	RELIinstance->public_ver_set_target_data();	//	set target ChIP-seq file
-	RELI::target_bed_file TBF;	// initialize target ChIP-seeq file object
+	RELI::target_bed_file TBF;	// initialize target ChIP-seq file object
 	TBF.readingData(RELIinstance->public_ver_target_data_fname, false);	// load target ChIP-seeq file
-	TBF.makeIndex();	// create target ChIP-seeq file index
+	TBF.makeIndex();	// create target ChIP-seq file index
 	RELI::targetbedinfilevec = TBF.myData;	//
 	RELI::targetbedfileindex_start = TBF.index;	//
 	RELI::binned_null_model_data.loading_null_data(RELIinstance->public_ver_null_fname.c_str());  //	load null model
@@ -166,7 +218,5 @@ int main(int argc, char* argv[]){
 	*/
 	RELIinstance->output();
 
-
-	return 0;
+	exit(EXIT_SUCCESS);
 }
-
