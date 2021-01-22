@@ -1,32 +1,12 @@
 #ifndef RELI_impl_h
 #define RELI_impl_h
-#include <thread>            
-#include <mutex>               
-#include <condition_variable>  
-#include <iostream>
-#include <fstream>
+
 #include <vector>
-#include <algorithm>
-#include <numeric>
-#include <limits.h>
-#include <stdlib.h>
-#include <stdio.h>
 #include <string>
-#include <string.h>
-#include <time.h>
 #include <map>
-#include <math.h>
-#include <algorithm>
-#include <ctime>
 #include <unordered_map>
-#include <chrono>
-#include <cstring>
-#include <queue> 
-#include <random> 
 #include <gsl/gsl_cdf.h>
 #include <gsl/gsl_randist.h>
-
-
 
 using namespace std;
 extern string buffer;
@@ -435,8 +415,5 @@ namespace RELI{
 	void loadSnpFile(string);
 }
 // end of RELI namespace  
-
-
-
 
 #endif

@@ -16,29 +16,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include <thread>            
-#include <mutex>               
-#include <condition_variable>  
 #include <iostream>
-#include <fstream>
-#include <vector>
-#include <algorithm>
-#include <numeric>
-#include <limits.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <string>
-#include <string.h>
-#include <time.h>
-#include <map>
-#include <math.h>
-#include <algorithm>
-#include <ctime>
-#include <unordered_map>
-#include <chrono>
-#include <cstring>
-#include <queue> 
-#include <random> 
 #include "RELI_impl.h"
 
 using namespace std;

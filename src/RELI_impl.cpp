@@ -235,8 +235,9 @@ void RELI::snpmodifier(SNP &SNP_A, SNP SNP_B, int dist){
 	SNP_A.snp_start = SNP_A.snp_end - SNP_A.length;
 }
 int RELI::get_index_to_be_used(string inChr, int inSt, map<pair<string, unsigned int>, int> inMap){
-	int rtype;
-	vector<pair<unsigned int, int>> tvec;  
+    int rtype = 0;
+	vector<pair<unsigned int, int>> tvec;
+    
 	for (auto it : inMap){
 		if (it.first.first == inChr){  
 			pair<unsigned int, int> t;
@@ -245,6 +246,7 @@ int RELI::get_index_to_be_used(string inChr, int inSt, map<pair<string, unsigned
 			tvec.push_back(t);
 		}
 	}
+    
 	if (tvec.size() > 0){
 		if (inSt < tvec.begin()->first){
 			rtype = tvec.begin()->second;
@@ -260,9 +262,6 @@ int RELI::get_index_to_be_used(string inChr, int inSt, map<pair<string, unsigned
 				break;
 			}
 		}
-	}
-	else{
-		rtype = 0;
 	}
 
 	return rtype;
@@ -823,7 +822,7 @@ void RELI::target_bed_file::readingData(string inStr, bool inVal){
 		std::default_random_engine tSeed(std::chrono::system_clock::now().time_since_epoch().count()); //RNG seed 
 		std::uniform_int_distribution<unsigned int> tGen(0, (RELI::bg_null_model_data.bin0.size() - 1));// RNG generator
 		for (auto k = tLDVec.begin(); k != tLDVec.end(); ++k){
-			bool tGood;
+			bool tGood = false;
 			unsigned int tIndex;
 			RELI::SNP tKeySNP;
 			tKeySNP.length = k->keySNP.length;
