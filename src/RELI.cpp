@@ -21,6 +21,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <cstdlib>      // for EXIT_SUCCESS, EXIT_FAILURE
 #include "RELI_impl.h"
 #include "config.h"
+#include "ansicolor.hpp"
 
 using namespace std;
 using namespace RELI;
@@ -37,7 +38,7 @@ void display_banner() {
 void display_help(int ret=EXIT_SUCCESS, int level=HELP_BRIEF) {
 	display_banner();
 
-	cout << "  usage:" << endl
+	cout << "  " << color::ul << "usage" << color::reset << ":" << endl
 	     << "    RELI [-h | -help | --help | -help-all] [-V | -version]" << endl
 	     << "    RELI -snp FILE -ld FILE -index FILE -data DIR -target STRING"<< endl
 	     << "         -build FILE -null FILE -dnsnp FILE -out DIR [-rep NUMBER]" << endl
@@ -45,13 +46,14 @@ void display_help(int ret=EXIT_SUCCESS, int level=HELP_BRIEF) {
 	     << endl;
 
 	if (level < HELP_OPTIONS) {
-		cout << "  Hint: Try 'RELI -h' for explanations of the options." << endl
+		cout << "  " << color::bold_green << "Hint" << color::reset
+		     << ": Try 'RELI -h' for explanations of the options." << endl
 		     << "  Please report issues at " RELI_ISSUE_TRACKER << endl
 		     << endl;
 		exit(ret);
 	}
 
-	cout << "  where:" << endl
+	cout << "  " << color::ul << "where" << color::reset << ":" << endl
 	     << "    -h, -help, --help  displays this help" << endl
 	     << "    -help-all          displays full help, including examples" << endl
 	     << "    -V, -version       displays the RELI version number and quits" << endl
@@ -78,13 +80,14 @@ void display_help(int ret=EXIT_SUCCESS, int level=HELP_BRIEF) {
 	     << endl;
 
 	if (level < HELP_EXAMPLES) {
-		cout << "  Hint: Try 'RELI -help-all' for example usage." << endl
+		cout << "  " << color::bold_green << "Hint" << color::reset
+		     << ": Try 'RELI -help-all' for example usage." << endl
 		     << "  Please report issues at " RELI_ISSUE_TRACKER << endl
 		     << endl;
 		exit(ret);
 	}
 
-	cout << "  example:" << endl
+	cout << "  " << color::ul << "example" << color::reset << ":" << endl
 	     << "    RELI \\" << endl
 	     << "      -snp SLE_EU.snp \\" << endl
 	     << "      -ld SLE_EU.ld \\" << endl

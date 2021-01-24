@@ -261,7 +261,9 @@ of RELI) or [Dr. Weirauch][matt] via email.
 
 ## Credits
 
-Project avatar based on Wikimedia Commons [Chromosome_18.svg][wmc]
+* Project avatar based on Wikimedia Commons [Chromosome_18.svg][wmc]
+* `src/ansicolor.hpp` courtesy of Juan Arrieta via
+  [this gist][jagist]; MIT license
 
 [md]: https://help.github.com/categories/writing-on-github/
 [gsl]: https://www.gnu.org/software/gsl/
@@ -283,3 +285,4 @@ Project avatar based on Wikimedia Commons [Chromosome_18.svg][wmc]
 [xct]: https://stackoverflow.com/a/32894314
 [xiaoting]: mailto:Xiaoting.Chen%20-at-%20cchmc.org?subject=RELI%20feedback&body=(don't%20forget%20to%20change%20%22-at-%22%20to%20%22%40%22%20before%20sending!)
 [matt]: mailto:Matthew.Weirauch%20-at-%20cchmc.org?subject=RELI%20feedback&body=(don't%20forget%20to%20change%20%22-at-%22%20to%20%22%40%22%20before%20sending!)
+[jagist]: https://gist.github.com/arrieta/a3b8e4c893b53ec5397ad0d92158e8f1
