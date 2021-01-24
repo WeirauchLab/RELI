@@ -17,8 +17,11 @@ RELI.dSYM/
 # ctags for code cross-reference support (regenerate these with 'ctags -R')
 tags
 
-# Eclipse default build path (some configurations)
+# Eclipse
+# default build path (some configurations)
 Default
+# make a symlink to dot-project and use that locally
+.project
 
 # don't commit the binary
 RELI
