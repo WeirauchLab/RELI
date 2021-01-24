@@ -20,8 +20,9 @@ tags
 # Eclipse
 # default build path (some configurations)
 Default
-# make a symlink to dot-project and use that locally
+# make symlinks to relevant dot-project* and use those locally
 .project
+.cproject
 
 # don't commit the binary
 RELI

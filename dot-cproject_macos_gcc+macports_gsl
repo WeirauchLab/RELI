@@ -65,19 +65,6 @@
 	</storageModule>
 	<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets"/>
 	<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
-	<storageModule moduleId="scannerConfiguration">
-		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
-		<scannerConfigBuildInfo instanceId="cdt.managedbuild.toolchain.gnu.cygwin.base.69633259;cdt.managedbuild.toolchain.gnu.cygwin.base.69633259.2008346559;cdt.managedbuild.tool.gnu.c.compiler.cygwin.base.1581452510;cdt.managedbuild.tool.gnu.c.compiler.input.cygwin.748465099">
-			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
-		</scannerConfigBuildInfo>
-		<scannerConfigBuildInfo instanceId="cdt.managedbuild.toolchain.gnu.cygwin.base.69633259;cdt.managedbuild.toolchain.gnu.cygwin.base.69633259.2008346559;cdt.managedbuild.tool.gnu.cpp.compiler.cygwin.base.1566953136;cdt.managedbuild.tool.gnu.cpp.compiler.input.cygwin.1363211515">
-			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
-		</scannerConfigBuildInfo>
-		<scannerConfigBuildInfo instanceId="cdt.managedbuild.toolchain.gnu.cygwin.base.69633259;cdt.managedbuild.toolchain.gnu.cygwin.base.69633259.2008346559;cdt.managedbuild.tool.gnu.cpp.compiler.macosx.base.369843965;cdt.managedbuild.tool.gnu.cpp.compiler.input.1702129243">
-			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
-		</scannerConfigBuildInfo>
-		<scannerConfigBuildInfo instanceId="cdt.managedbuild.toolchain.gnu.cygwin.base.69633259;cdt.managedbuild.toolchain.gnu.cygwin.base.69633259.2008346559;cdt.managedbuild.tool.gnu.c.compiler.macosx.base.1085438503;cdt.managedbuild.tool.gnu.c.compiler.input.2012057693">
-			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
-		</scannerConfigBuildInfo>
-	</storageModule>
+	<storageModule moduleId="scannerConfiguration"/>
+	<storageModule moduleId="org.eclipse.cdt.core.pathentry"/>
 </cproject>
