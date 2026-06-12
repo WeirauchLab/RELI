@@ -226,7 +226,7 @@ against the public GitHub repository.
 
 ## How to cite
 
-> Xiaoting Chen. (2018). WeirauchLab/RELI (v0.90). Zenodo. https://doi.org/10.5281/zenodo.4266978
+> Chen, X., & Cincinnati Children's Hospital Medical Center (2018). WeirauchLab/RELI (v0.90). Zenodo. https://doi.org/10.5281/zenodo.4266978
 
 ### Associated _Nature Genetics_ publication
 
