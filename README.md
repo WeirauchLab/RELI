@@ -1,4 +1,6 @@
-## Regulatory Element Locus Intersection (RELI) Analysis
+# Regulatory Element Locus Intersection (RELI) Analysis
+
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4266978.svg)](https://doi.org/10.5281/zenodo.4266978)
 
 RELI (Regulatory Element Locus Intersection) is an algorithm for discovering
 transcription factors (TFs) that bind a significant number of loci associated
@@ -223,6 +225,10 @@ additional details (see "Feedback" section, below), or [file an issue][ghi]
 against the public GitHub repository.
 
 ## How to cite
+
+> Xiaoting Chen. (2018). WeirauchLab/RELI (v0.90). Zenodo. https://doi.org/10.5281/zenodo.4266978
+
+### Associated _Nature Genetics_ publication
 
 [_Transcription factors operate across disease loci, with EBNA2 implicated in
 autoimmunity._][pubmed]
